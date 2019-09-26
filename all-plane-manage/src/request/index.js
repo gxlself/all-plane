@@ -1,6 +1,6 @@
-import axios from 'axios'
-import router from '../router'
 import config from '../config'
+import router from '../router/index'
+const axios = require('axios')
 
 const service = axios.create({
   baseURL: config.baseURL, // 请求主地址
@@ -11,10 +11,11 @@ const service = axios.create({
 service.interceptors.request.use(request => {
   let token = sessionStorage.getItem('token')
   if (!token) {
-    router.push({path: '/login'})
+    router.push({name: 'login'})
   } else {
     request.headers.Authorization = token
   }
+  return request
 }, error => {
   return Promise.reject(error)
 })
@@ -23,10 +24,10 @@ service.interceptors.request.use(request => {
 service.interceptors.response.use(response => {
   return response
 }, error => {
-  if (error.response.status >= 400) {
+  if (error && error.response.status >= 400) {
     router.push({path: '/login'})
   }
   return Promise.reject(error)
 })
 
-module.exports = service
+export default service
