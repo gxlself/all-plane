@@ -1,0 +1,24 @@
+.DS_Store
+./all-plane/node_modules/
+./all-plane-manage/node_modules/
+./all-plane-mobile/node_modules/
+./all-plane-manage/dist/
+./all-plane-mobile/dist/
+./all-plane-manage/npm-debug.log*
+./all-plane-mobile/npm-debug.log*
+./all-plane-manage/yarn-debug.log*
+./all-plane-mobile/yarn-debug.log*
+./all-plane-manage/yarn-error.log*
+./all-plane-mobile/yarn-error.log*
+/test/unit/coverage/
+/test/e2e/reports/
+selenium-debug.log
+/node_modules/
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
