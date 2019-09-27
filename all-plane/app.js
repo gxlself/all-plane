@@ -12,6 +12,18 @@ var app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//设置跨域访问
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3334');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Credentials','true');
+  res.header("Content-Type", "application/json;charset=utf-8");
+  next();
+};
+
+app.use(allowCrossDomain)
 // 默认的路由（不需要拦截的登录注册）
 app.use('/', routerIndex)
 //拦截器
@@ -29,7 +41,8 @@ app.use('/mobile', mobile);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  // next(createError(404));
+  res.send({code: -1, msg: '无此接口', status: 404});
 });
 
 // error handler
@@ -39,8 +52,9 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  // res.status(err.status || 500);
+  // res.render('error');
+  res.send({code: -1, msg: err, status: err.status || 500});
 });
 
 module.exports = app;

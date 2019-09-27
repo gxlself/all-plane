@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '../view/login'
+import Index from '../views/Index'
 
 Vue.use(Router)
 
@@ -11,14 +11,13 @@ export default new Router({
       redirect: '/login'
     },
     {
-      path: '/login',
-      name: 'login',
-      component: Login
+      path: '/Index',
+      name: 'index',
+      component: Index
     },
     {
-      path: '/register',
-      name: 'register',
-      component: Login
+      path: '/login',
+      name: resolve => { require(['../views/login.vue'], resolve) }
     }
   ]
 })
