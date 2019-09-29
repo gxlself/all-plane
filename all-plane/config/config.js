@@ -5,6 +5,9 @@ const sql = {
   database : 'allplant'
 }
 
+const sign = 'gxlself'
+
 module.exports = {
-  sql
+  sql,
+  sign
 }

@@ -50,14 +50,17 @@ const service = axios.create({
 service.interceptors.request.use(config => {
     showFullScreenLoading();
     let token = sessionStorage.getItem('token');
+    let username = sessionStorage.getItem('username');
     if (!token){
-        router.push({path: '/login'})
+        if (location.hash !== '#/login') {
+            router.push({path: '/login'})
+        }
         let timer = setTimeout(() => {
             tryHideFullScreenLoading()
             clearTimeout(timer)
         }, 1000) 
     } else {
-        config.headers.Authorization = token;
+        config.headers.Authorization = token + ',' + username;
     }
     return config
 }, error => {
@@ -70,19 +73,19 @@ service.interceptors.request.use(config => {
 
 /********** 响应拦截器 对响应参数进行处理 **********/
 service.interceptors.response.use(response => {
-    tryHideFullScreenLoading();
+    if (response.data.status >= 400) {
+        vm.$message({ showClose: true, message: '登录状态失效', type: 'error', duration: 1000, onClose: () => {
+            router.push({path: '/login'})
+        }})
+    }
+    let timer = setTimeout(() => {
+        tryHideFullScreenLoading()
+        clearTimeout(timer)
+    }, 1000)
     return response
 }, error => {
-    if (error.response.status == 401) {
+    if (error.response.status === 401) {
         router.push({path: '/login'})
-    }
-    if (error.response.status == 400){
-        vm.$message({           
-            showClose: true,
-            message: '密码错误',
-            type: 'error',
-            duration: 1000
-        })
     }
     let timer = setTimeout(() => {
         tryHideFullScreenLoading()

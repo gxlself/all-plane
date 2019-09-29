@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '../views/Index'
 
 Vue.use(Router)
 
@@ -11,13 +10,30 @@ export default new Router({
       redirect: '/login'
     },
     {
-      path: '/Index',
-      name: 'index',
-      component: Index
+      path: '/login',
+      name: 'login',
+      component: resolve => { require(['../views/login.vue'], resolve) }
     },
     {
-      path: '/login',
-      name: resolve => { require(['../views/login.vue'], resolve) }
+      path: '/manage',
+      name: 'manage',
+      component: resolve => { require(['../views/index.vue'], resolve) },
+      children: [
+        {
+          path: '',
+          redirect: '/system'
+        },
+        {
+          path: '/system',
+          name: 'system',
+          component: resolve => { require(['../views/system/system.vue'], resolve) }
+        },
+        {
+          path: '/message',
+          name: 'message',
+          component: resolve => { require(['../views/system/message.vue'], resolve) }
+        }
+      ]
     }
   ]
 })
