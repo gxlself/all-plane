@@ -5,8 +5,10 @@
 </template>
 
 <script>
+import { mapMutations} from 'vuex'
 export default {
   methods: {
+    ...mapMutations(['setUsername']),
     login() {
       let data = {
         username: 'gxlself',
@@ -14,8 +16,7 @@ export default {
       }
       this.api.login(data).then(res => {
         if (res.status === 200 && res.code === 0) {
-          sessionStorage.setItem('token', res.data.token)
-          sessionStorage.setItem('username', res.data.username)
+          this.setUsername(res.data)
           this.$message({ message: '登录成功', type: 'success' });
           this.$router.push({name: 'message'})
         } else {

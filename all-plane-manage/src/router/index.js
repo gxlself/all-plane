@@ -21,15 +21,15 @@ export default new Router({
       children: [
         {
           path: '',
-          redirect: '/system'
+          redirect: 'system'
         },
         {
-          path: '/system',
+          path: 'system',
           name: 'system',
           component: resolve => { require(['../views/system/system.vue'], resolve) }
         },
         {
-          path: '/message',
+          path: 'message',
           name: 'message',
           component: resolve => { require(['../views/system/message.vue'], resolve) }
         }

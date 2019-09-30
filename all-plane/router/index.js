@@ -36,7 +36,7 @@ router.post('/manage/login', function(req, res, next) {
 });
 // 存储token值
 function saveToToken (a_token, token, username, res) {
-  const saveTokenSql = `INSERT INTO m_token VALUES('${a_token}', '${token}', '${username}')`
+  const saveTokenSql = `INSERT INTO m_token VALUES('${token}', '${a_token}', '${username}')`
   sqlTodo(saveTokenSql, results => {
     res.send({
       code: 0, 

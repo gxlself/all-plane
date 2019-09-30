@@ -6,17 +6,39 @@
 
 <script>
 import Index from './views/Index'
+import { mapGetters } from 'vuex'
 export default {
   name: 'App',
-  mounted() {
+  data() {
+    return {
+
+    }
   },
   components: {
     Index
+  },
+  methods: {
+
+  },
+  computed: mapGetters(['getToken']),
+  watch: {
+    $route(to, from) {
+      let token = sessionStorage.getItem('token')
+      if (!token && this.$router.name !== 'login') {
+        this.$router.push({path: '/login'})
+      }
+    }
   }
 }
 </script>
 
 <style>
+html,body{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
 #app {
   position: absolute;
   top: 0;
