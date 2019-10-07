@@ -14,7 +14,7 @@
             <el-input type="text" placeholder="请输入主题" v-model="messageForm.theme" maxlength="20" show-word-limit></el-input>
           </el-form-item>
           <el-form-item label="公告内容">
-            <div id="editor"></div>
+            <!-- <div id="editor"></div> -->
           </el-form-item>
           <el-form-item label="执行操作">
             <div class="btn-control">
@@ -25,13 +25,15 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <Editor v-model="messageForm.content"/>
     </el-form>
   </div>
 </template>
 
 <script>
-const E = require('wangeditor') 
-let editor = null
+// const E = require('wangeditor') 
+// let editor = null
+import Editor from '../../components/Personal-editor.vue'
 export default {
   data() {
     return {
@@ -41,10 +43,13 @@ export default {
       }
     }
   },
+  components: {
+    Editor
+  },
   mounted() {
     this.$nextTick(() => {
-      editor = new E('#editor')
-      editor.create()
+      // editor = new E('#editor')
+      // editor.create()
     })
   },
   methods: {
@@ -52,7 +57,7 @@ export default {
       let options = {
         title: this.messageForm.title,
         theme: this.messageForm.theme,
-        content: editor.txt.html(),
+        // content: editor.txt.html(),
         type: 1,
         username: sessionStorage.getItem('username')
       }
@@ -64,7 +69,7 @@ export default {
       let options = {
         title: this.messageForm.title,
         theme: this.messageForm.theme,
-        content: editor.txt.html(),
+        // content: editor.txt.html(),
         type: 2,
         username: sessionStorage.getItem('username')
       }
