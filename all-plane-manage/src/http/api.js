@@ -9,12 +9,11 @@ api.login = function(data) {
     }
   })
 }
-api.loginout = function(data) {
-  return service({url:"/loginout", method: 'get', data: data}).then(res => {
-    if (res.status == 200) {
-      return res.data
-    }
-  })
+api.loginout = async function(data) {
+  const res = await service({ url: "/loginout", method: 'get', data: data });
+  if (res.status == 200) {
+    return res.data;
+  }
 }
 
 // 新建公告信息 type=1  提交到审核  type=2  保存到草稿
