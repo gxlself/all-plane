@@ -120,6 +120,7 @@ export default {
 <style lang="less" scoped>
 .index{
   height: 100%;
+  padding-top: 60px;
   .el-header, .el-footer {
     background-color: #B3C0D1;
     color: #333;
@@ -143,10 +144,15 @@ export default {
     min-height: 400px;
   }
   .el-header{
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 9;
     .menu-control{
       position: absolute;
       left: 10px;
