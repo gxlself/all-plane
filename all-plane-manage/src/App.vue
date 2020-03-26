@@ -24,7 +24,7 @@ export default {
   watch: {
     $route(to, from) {
       let token = sessionStorage.getItem('token')
-      if (!token && this.$router.name !== 'login') {
+      if (!token && this.$route.path !== '/login') {
         this.$router.push({path: '/login'})
       }
     }
@@ -45,6 +45,6 @@ html,body{
   bottom: 0;
   left: 0;
   right: 0;
-  background: #f5f5f5;
+  background: rgb(233, 236, 243);
 }
 </style>

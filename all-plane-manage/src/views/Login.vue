@@ -5,24 +5,29 @@
 </template>
 
 <script>
-import { mapMutations} from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
   methods: {
-    ...mapMutations(['setUsername']),
+    ...mapMutations(['SET_USERNAME', 'SET_TOKEN']),
     login() {
       let data = {
         username: 'gxlself',
         password: '123456'
       }
-      this.api.login(data).then(res => {
-        if (res.status === 200 && res.code === 0) {
-          this.setUsername(res.data)
+
+      this.$store.dispatch('login', data)
+        .then(res => {
+          this.SET_USERNAME(res.data.username)
+          this.SET_TOKEN(res.data.token)
           this.$message({ message: '登录成功', type: 'success' });
-          this.$router.push({name: 'message'})
-        } else {
-          this.$message({ message: res.msg, type: 'success' });
-        }
-      })
+          this.$router.push({path: '/manage'})
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    mounted() {
+      sessionStorage.clear()
     }
   }
 }
