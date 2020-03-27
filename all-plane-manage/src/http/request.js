@@ -1,11 +1,8 @@
 
 import axios from 'axios';
 import config from '../config';
-import Vue from 'vue';
 import store from '../store/index'
 
-let vm = new Vue();
-/********** 创建axios实例 **********/ 
 const service = axios.create({
     baseURL: config.baseUrl, // 请求主地址
     timeout: 50000           // 请求超时时间
@@ -33,7 +30,6 @@ service.interceptors.response.use(response => {
         return Promise.reject(new Error(response.message || 'Error'))
     }
 }, error => {
-    vm.$message({ showClose: true, message: error.message, type: 'error', duration: 2000})
     return Promise.reject(error)
 })
 

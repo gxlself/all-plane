@@ -32,7 +32,8 @@
       <el-container class="g-i-container">
         <!-- 路由内容 -->
         <el-main>
-          <router-view/>
+          {{this.$route.path}}
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -56,12 +57,12 @@ export default {
             {
               title: '系统管理',
               index: '1-1',
-              path: '/manage/system'
+              path: '/manage/message/list'
             },
             {
               title: '新建公告',
               index: '1-2',
-              path: '/manage/message'
+              path: '/manage/message/add'
             }
           ]
         }, {

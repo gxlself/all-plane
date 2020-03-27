@@ -10,6 +10,7 @@ var log4js = require("./utils/log");
 var routerIndex = require('./router/index')
 var manage = require('./manage/index');
 var mobile = require('./mobile/index');
+var system = require('./system/index');
 
 // 实例express
 var app = express();
@@ -24,7 +25,7 @@ let tokenLog = log4js.useLog('token')
 
 //设置跨域访问
 var allowCrossDomain = function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3334');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3335');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'authorization,content-Type');
   res.header('Access-Control-Allow-Credentials','true');
@@ -79,6 +80,7 @@ app.use(function (req, res, next) {
 // 前后路由开始
 app.use('/manage', manage);
 app.use('/mobile', mobile);
+app.use('/system', system);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

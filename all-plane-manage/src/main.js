@@ -10,7 +10,7 @@ import router from './router'
 import store from './store/index'
 import config from './config'
 
-import './permission'
+// import './permission'
 import api from './http/api'
 
 Vue.config.productionTip = false

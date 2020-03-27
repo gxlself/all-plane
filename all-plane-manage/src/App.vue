@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-loading.body="this.$store.state.loading" customClass="transparent">
+  <div id="app" customClass="transparent">
     <router-view></router-view>
   </div>
 </template>
@@ -21,14 +21,6 @@ export default {
 
   },
   computed: mapGetters(['getToken']),
-  watch: {
-    $route(to, from) {
-      let token = sessionStorage.getItem('token')
-      if (!token && this.$route.path !== '/login') {
-        this.$router.push({path: '/login'})
-      }
-    }
-  }
 }
 </script>
 

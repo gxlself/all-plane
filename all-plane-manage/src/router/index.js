@@ -6,13 +6,9 @@ Vue.use(Router)
 const customRouter = [
   {
     path: '/',
-    redirect: '/dashboard'
+    redirect: '/login'
   },
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: resolve => { require(['../views/login.vue'], resolve) }
-  },
+
   {
     path: '/login',
     name: 'Login',
@@ -22,30 +18,44 @@ const customRouter = [
     path: '/manage',
     name: 'Manage',
     component: resolve => { require(['../views/index.vue'], resolve) },
-    redirect: '/manage/system',
+    redirect: '/manage/message/list',
     children: [
       {
-        path: 'system',
+        path: '/manage/message',
+        name: 'Message',
+        redirect: '/manage/message/list',
+        children: [
+          {
+            path: '/manage/message/list',
+            name: 'ManageList',
+            component: resolve => { require(['../views/message/list.vue'], resolve) }
+          },
+          {
+            path: '/manage/message/add',
+            name: 'ManageAdd',
+            component: resolve => { require(['../views/message/add.vue'], resolve) }
+          }
+        ]
+      },
+      {
+        path: '/system',
         name: 'System',
-        component: resolve => { require(['../views/system/system.vue'], resolve) }
+        redirect: '/system/list',
+        children: [
+          {
+            path: 'system/list',
+            name: 'SystemList',
+            component: resolve => { require(['../views/system/system.vue'], resolve) }
+          },
+          {
+            path: 'system/add',
+            name: 'SystemAdd',
+            component: resolve => { require(['../views/message/add.vue'], resolve) }
+          }
+        ]
       },
-      {
-        path: 'message/add',
-        name: 'MessageAdd',
-        component: resolve => { require(['../views/message/add.vue'], resolve) }
-      },
-      {
-        path: 'message/list',
-        name: 'MessageList',
-        component: resolve => { require(['../views/message/list.vue'], resolve) }
-      }
     ]
   },
-  // {
-  //   name: 'error',
-  //   path: '/404',
-  //   component: resolve => { require(['../views/error/404.vue'], resolve) },
-  // },
   { 
     path: '*', 
     component: resolve => { require(['../views/error/404.vue'], resolve) },
@@ -55,3 +65,9 @@ const customRouter = [
 export default new Router({
   routes: customRouter
 })
+
+    // {
+  //   path: '/dashboard',
+  //   name: 'Dashboard',
+  //   component: resolve => { require(['../views/login.vue'], resolve) }
+  // },
