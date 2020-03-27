@@ -1,0 +1,10 @@
+[2020-03-27T13:58:33.428] [TRACE] login - 系统登录SQL ====== select username,password,o_username from m_users where username='5c1338f06725fee21bfe6e43ef2a18e0' and password='e10adc3949ba59abbe56e057f20f883e';
+[2020-03-27T13:58:33.740] [TRACE] login - 登录查找token-SQL ====== SELECT username FROM m_token WHERE username='gxlself'
+[2020-03-27T13:58:33.774] [TRACE] login - 存储token值-SQL ====== UPDATE m_token SET a_token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd4bHNlbGYiLCJpYXQiOjE1ODUyODg3MTN9.tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM',token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM',username='gxlself'
+[2020-03-27T17:42:08.004] [TRACE] login - 系统登录SQL ====== select username,password,o_username from m_users where username='5c1338f06725fee21bfe6e43ef2a18e0' and password='e10adc3949ba59abbe56e057f20f883e';
+[2020-03-27T17:42:43.403] [TRACE] login - 系统登录SQL ====== select username,password,o_username from m_users where username='5c1338f06725fee21bfe6e43ef2a18e0' and password='e10adc3949ba59abbe56e057f20f883e';
+[2020-03-27T17:42:43.503] [ERROR] login - 登录出错-err.message ====== loginLogger is not defined
+[2020-03-27T17:43:22.221] [TRACE] login - 系统登录SQL ====== select username,password,o_username from m_users where username='5c1338f06725fee21bfe6e43ef2a18e0' and password='e10adc3949ba59abbe56e057f20f883e';
+[2020-03-27T17:43:22.314] [ERROR] login - 登录出错-err.message ====== loginLogger is not defined
+[2020-03-27T17:44:19.854] [TRACE] login - 系统登录SQL ====== select username,password,o_username from m_users where username='5c1338f06725fee21bfe6e43ef2a18e0' and password='e10adc3949ba59abbe56e057f20f883e';
+[2020-03-27T17:44:19.952] [TRACE] login - 登录查找token-SQL ====== SELECT * FROM m_token WHERE username='gxlself'

@@ -1,10 +1,10 @@
 var express = require('express');
-var router = express.Router();
 var md5 = require('md5');
+var router = express.Router();
 var { sqlTodo } = require('../utils/sql') 
-var jwt = require('jsonwebtoken');
-var { sign } = require('../config/config')
+var { createToken, verify } = require('../utils/jwt')
 var logger = require('../utils/log').useLog('login')
+const { sMsg, eMsg, cMsg } = require('../utils/send')
 
 // 管理系统登录
 router.post('/manage/login', function(req, res, next) {
@@ -12,63 +12,70 @@ router.post('/manage/login', function(req, res, next) {
   const password = md5(req.body.password)
   const queryLoginSql = `select username,password,o_username from m_users where username='${username}' and password='${password}';`
   logger.trace(`系统登录SQL ====== ${queryLoginSql}`)
-  sqlTodo(queryLoginSql, (results, fields) => {
-    const currentUser = results[0]
-    if (results.length === 0) {
-      res.send({code: 1, msg: '查无此人', status: 200});
-    } else {
-      jwt.sign({username: currentUser.o_username}, sign, function(err, token) {
-        const t = token.split('.')
-        const queryToken = `SELECT username FROM m_token WHERE username='${currentUser.o_username}'`
-        logger.trace(`登录查找token-SQL ====== ${queryToken}`)
-        sqlTodo(queryToken, results => {
-          if (results.length == 0) {
-            saveToToken(token, t[2], currentUser.o_username, res)
-          } else {
-            updateToken(token, t[2], currentUser.o_username, res)
-          }
-        }, err => {
-          logger.error(`登录查找token ====== ${err.message || '数据库错误， 请稍候再试'}`)
-          res.send({code: -2, msg: '数据库错误， 请稍候再试', status: 200});
-        })
-      })
-    }
-  }, err => {
-    console.log('/manage/login', err)
-    res.send({code: 2, msg: '数据库查询错误', status: 200});
-  })
+  sqlTodo(queryLoginSql)
+    .then(results => {
+      if (results.length === 0) {
+        res.send(cMsg('账号与密码不匹配'))
+      } else {
+        const currentUser = results[0]
+        checkTokenInvalid(currentUser.o_username, res)
+      }
+    })
+    .catch(err => {
+      logger.error(`登录出错-err.message ====== ${err.message}`)
+      res.send(eMsg('数据库错误， 请稍候再试'))
+    })
 });
-// 存储token值
-function saveToToken (a_token, token, username, res) {
-  const saveTokenSql = `INSERT INTO m_token VALUES('${token}', '${a_token}', '${username}')`
-  logger.trace(`存储token值-SQL ====== ${saveTokenSql}`)
-  sqlTodo(saveTokenSql, results => {
-    res.send({
-      code: 0, 
-      msg: 'ok', 
-      status: 200, 
-      data: { token, username }
-    });
-  }, err => {
-    logger.error(`存储token值-SQL ====== ${err.message || '失败，请重试'}`)
-    res.send({code: -1, msg: '失败，请重试', status: 200});
-  })
+
+// 校验token值 有效期直接返回 否则重新生成
+function checkTokenInvalid(username, res) {
+  const queryToken = `SELECT * FROM m_token WHERE username='${username}'`
+  logger.trace(`登录查找token-SQL ====== ${queryToken}`)
+  sqlTodo(queryToken)
+    .then(results => {
+      if (results.length === 0) {
+        saveToToken (username, res)
+      } else {
+        let token = results[0].token
+        let a_token = results[0].a_token
+        verify(a_token)
+          .then(ver => {
+            if (ver.username === username) {
+              res.send(sMsg({ token, username }))
+            } else {
+              saveToToken (username, res, false)
+            }
+          })
+          .catch(err => {
+            // token出错后 再次更新
+            saveToToken (username, res, false)
+          })
+      }
+    })
+    .catch(err => {
+      res.send({ code: -1, msg: err.message, status: 200, data: null });
+    })
 }
-// 更新token值
-function updateToken(a_token, token, username, res) {
-  const updateTokenSql = `UPDATE m_token SET a_token='${a_token}',token='${token}',username='${username}'`
-  logger.trace(`存储token值-SQL ====== ${updateTokenSql}`)
-  sqlTodo(updateTokenSql, results => {
-    res.send({
-      code: 0, 
-      msg: 'ok', 
-      status: 200, 
-      data: { token, username }
-    });
-  }, err => {
-    logger.error(`更新token值-SQL ====== ${err.message || '失败，请重试'}`)
-    res.send({code: -1, msg: '失败，请重试', status: 200});
-  })
+// 存储token值 isInsert true 是新增token false 为更细token
+function saveToToken(username, res, isInsert = true) {
+  let newAllToken = createToken({ username });
+  let t = newAllToken.split('.')
+  let token = t[2]
+  let saveTokenSql = ''
+  if (isInsert) {
+    saveTokenSql = `INSERT INTO m_token VALUES('${token}', '${newAllToken}', '${username}')`
+  } else {
+    saveTokenSql = `UPDATE m_token SET a_token='${newAllToken}', token='${token}' WHERE username='${username}'`
+  }
+  logger.trace(`存储token值-SQL ====== ${saveTokenSql}`)
+  sqlTodo(saveTokenSql)
+    .then(results => {
+      res.send(sMsg({ token, username }))
+    })
+    .catch(err => {
+      logger.error(`存储token值 ====== ${err.message || '失败，请重试'}`)
+      res.send(eMsg('失败，请重试'))
+    })
 }
 
 module.exports = router;
