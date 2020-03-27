@@ -143,10 +143,18 @@ export default {
     top: 0;
     left: 0;
     right: 0;
+<<<<<<< HEAD
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9;
+=======
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 3;
+>>>>>>> 6d0d12eaa1b34d71726dd16923fdbe8236c22f92
     .menu-control{
       position: absolute;
       bottom: 0;
