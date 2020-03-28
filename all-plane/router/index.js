@@ -5,12 +5,22 @@ var { sqlTodo } = require('../utils/sql')
 var { createToken, verify } = require('../utils/jwt')
 var logger = require('../utils/log').useLog('login')
 const { sMsg, eMsg, cMsg } = require('../utils/send')
+const { checkString } = require('../utils/util')
 
 // 管理系统登录
 router.post('/manage/login', function(req, res, next) {
-  const username = md5(req.body.username)
-  const password = md5(req.body.password)
-  const queryLoginSql = `select username,password,o_username from m_users where username='${username}' and password='${password}';`
+  const { username, password } = req.body
+  if (!checkString(username)) {
+    res.send(eMsg('username is invalid'))
+    return
+  }
+  if (!checkString(password)) {
+    res.send(eMsg('password is invalid'))
+    return
+  }
+  const _username = md5(username)
+  const _password = md5(password)
+  const queryLoginSql = `select username,password,o_username from m_users where username='${_username}' and password='${_password}';`
   logger.trace(`系统登录SQL ====== ${queryLoginSql}`)
   sqlTodo(queryLoginSql)
     .then(results => {

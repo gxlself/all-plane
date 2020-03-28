@@ -1,79 +1,110 @@
-[2020-03-27T13:58:33.428] [TRACE] login - 系统登录SQL ====== select username,password,o_username from m_users where username='5c1338f06725fee21bfe6e43ef2a18e0' and password='e10adc3949ba59abbe56e057f20f883e';
-[2020-03-27T13:58:33.740] [TRACE] login - 登录查找token-SQL ====== SELECT username FROM m_token WHERE username='gxlself'
-[2020-03-27T13:58:33.774] [TRACE] login - 存储token值-SQL ====== UPDATE m_token SET a_token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd4bHNlbGYiLCJpYXQiOjE1ODUyODg3MTN9.tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM',token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM',username='gxlself'
-[2020-03-27T17:42:08.004] [TRACE] login - 系统登录SQL ====== select username,password,o_username from m_users where username='5c1338f06725fee21bfe6e43ef2a18e0' and password='e10adc3949ba59abbe56e057f20f883e';
-[2020-03-27T17:42:43.403] [TRACE] login - 系统登录SQL ====== select username,password,o_username from m_users where username='5c1338f06725fee21bfe6e43ef2a18e0' and password='e10adc3949ba59abbe56e057f20f883e';
-[2020-03-27T17:42:43.503] [ERROR] login - 登录出错-err.message ====== loginLogger is not defined
-[2020-03-27T17:43:22.221] [TRACE] login - 系统登录SQL ====== select username,password,o_username from m_users where username='5c1338f06725fee21bfe6e43ef2a18e0' and password='e10adc3949ba59abbe56e057f20f883e';
-[2020-03-27T17:43:22.314] [ERROR] login - 登录出错-err.message ====== loginLogger is not defined
-[2020-03-27T17:44:19.854] [TRACE] login - 系统登录SQL ====== select username,password,o_username from m_users where username='5c1338f06725fee21bfe6e43ef2a18e0' and password='e10adc3949ba59abbe56e057f20f883e';
-[2020-03-27T17:44:19.952] [TRACE] login - 登录查找token-SQL ====== SELECT * FROM m_token WHERE username='gxlself'
-[2020-03-27T18:04:47.250] [WARN] request - 请求warn ====== 无此接口
-[2020-03-27T18:04:47.500] [WARN] request - 请求warn ====== 无此接口
-[2020-03-27T18:04:50.541] [WARN] request - 请求warn ====== 无此接口
-[2020-03-27T18:04:50.783] [WARN] request - 请求warn ====== 无此接口
-[2020-03-27T18:04:54.972] [WARN] request - 请求warn ====== 无此接口
-[2020-03-27T18:04:55.200] [WARN] request - 请求warn ====== 无此接口
-[2020-03-27T18:05:07.857] [WARN] request - 请求warn ====== 无此接口
-[2020-03-27T18:05:08.094] [WARN] request - 请求warn ====== 无此接口
-[2020-03-27T18:05:28.841] [WARN] request - 请求warn ====== 无此接口
-[2020-03-27T18:08:48.626] [TRACE] login - 系统登录SQL ====== select username,password,o_username from m_users where username='5c1338f06725fee21bfe6e43ef2a18e0' and password='e10adc3949ba59abbe56e057f20f883e';
-[2020-03-27T18:08:48.720] [TRACE] login - 登录查找token-SQL ====== SELECT * FROM m_token WHERE username='gxlself'
-[2020-03-27T18:09:42.392] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-03-27T18:09:42.392] [TRACE] request - 请求进入referer ===== undefined
-[2020-03-27T18:09:42.392] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-03-27T18:09:42.392] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-03-27T18:09:42.392] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
-[2020-03-27T18:11:41.351] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-03-27T18:11:41.354] [TRACE] request - 请求进入referer ===== undefined
-[2020-03-27T18:11:41.354] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-03-27T18:11:41.354] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-03-27T18:11:41.354] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
-[2020-03-27T18:12:14.807] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-03-27T18:12:14.809] [TRACE] request - 请求进入referer ===== undefined
-[2020-03-27T18:12:14.809] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-03-27T18:12:14.809] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-03-27T18:12:14.810] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
-[2020-03-27T18:12:14.918] [ERROR] request - 请求error ====== data is not defined
-[2020-03-27T18:12:18.823] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-03-27T18:12:18.823] [TRACE] request - 请求进入referer ===== undefined
-[2020-03-27T18:12:18.823] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-03-27T18:12:18.824] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-03-27T18:12:18.824] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
-[2020-03-27T18:12:18.827] [ERROR] request - 请求error ====== data is not defined
-[2020-03-27T18:12:19.543] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-03-27T18:12:19.543] [TRACE] request - 请求进入referer ===== undefined
-[2020-03-27T18:12:19.543] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-03-27T18:12:19.543] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-03-27T18:12:19.543] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
-[2020-03-27T18:12:19.545] [ERROR] request - 请求error ====== data is not defined
-[2020-03-27T18:12:52.879] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-03-27T18:12:52.881] [TRACE] request - 请求进入referer ===== undefined
-[2020-03-27T18:12:52.882] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-03-27T18:12:52.882] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-03-27T18:12:52.882] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
-[2020-03-27T18:13:27.319] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-03-27T18:13:27.321] [TRACE] request - 请求进入referer ===== undefined
-[2020-03-27T18:13:27.321] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-03-27T18:13:27.321] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-03-27T18:13:27.321] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
-[2020-03-27T18:13:54.903] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-03-27T18:13:54.906] [TRACE] request - 请求进入referer ===== undefined
-[2020-03-27T18:13:54.906] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-03-27T18:13:54.906] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-03-27T18:13:54.906] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
-[2020-03-27T18:15:06.687] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-03-27T18:15:06.690] [TRACE] request - 请求进入referer ===== undefined
-[2020-03-27T18:15:06.691] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-03-27T18:15:06.691] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-03-27T18:15:06.691] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
-[2020-03-27T18:21:22.281] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-03-27T18:21:22.281] [TRACE] request - 请求进入referer ===== undefined
-[2020-03-27T18:21:22.281] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-03-27T18:21:22.281] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-03-27T18:21:22.281] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
-[2020-03-27T18:21:22.927] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-03-27T18:21:22.927] [TRACE] request - 请求进入referer ===== undefined
-[2020-03-27T18:21:22.927] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-03-27T18:21:22.927] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-03-27T18:21:22.927] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:29:59.058] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:29:59.059] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:29:59.059] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:29:59.059] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:29:59.059] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:43:00.777] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:43:00.779] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:43:00.779] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:43:00.779] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:43:00.779] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:44:13.096] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:44:13.097] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:44:13.097] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:44:13.097] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:44:13.097] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:45:10.036] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:45:10.038] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:45:10.038] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:45:10.038] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:45:10.038] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:46:08.993] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:46:08.994] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:46:08.994] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:46:08.994] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:46:08.994] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:47:33.912] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:47:33.914] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:47:33.914] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:47:33.914] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:47:33.914] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:47:56.088] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:47:56.090] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:47:56.090] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:47:56.090] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:47:56.090] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:47:57.123] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:47:57.124] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:47:57.124] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:47:57.124] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:47:57.124] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:57:11.891] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:57:11.891] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:57:11.891] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:57:11.892] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:57:11.892] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:57:12.860] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:57:12.860] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:57:12.860] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:57:12.860] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:57:12.860] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:57:25.210] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:57:25.212] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:57:25.212] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:57:25.212] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:57:25.212] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:57:25.906] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:57:25.906] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:57:25.906] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:57:25.906] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:57:25.906] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:57:26.412] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:57:26.413] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:57:26.413] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:57:26.413] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:57:26.413] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:57:26.675] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:57:26.675] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:57:26.675] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:57:26.675] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:57:26.675] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:57:26.877] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:57:26.877] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:57:26.877] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:57:26.877] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:57:26.877] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:57:27.110] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:57:27.110] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:57:27.110] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:57:27.110] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:57:27.110] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:57:27.220] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:57:27.220] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:57:27.220] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:57:27.220] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:57:27.220] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:57:37.621] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:57:37.621] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:57:37.621] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:57:37.622] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:57:37.622] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:57:38.380] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:57:38.380] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:57:38.380] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:57:38.380] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:57:38.380] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:57:54.513] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:57:54.515] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:57:54.515] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:57:54.515] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:57:54.515] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:58:28.676] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:58:28.677] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:58:28.677] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:58:28.677] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:58:28.678] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-03-29T01:59:07.497] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-03-29T01:59:07.499] [TRACE] request - 请求进入referer ===== undefined
+[2020-03-29T01:59:07.499] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-03-29T01:59:07.499] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-03-29T01:59:07.499] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
