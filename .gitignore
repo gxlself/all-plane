@@ -7,6 +7,10 @@ selenium-debug.log
 /node_modules/
 node_modules/
 ./node_modules/
+./manage/node_modules
+./all-plane-mobile/node_modules
+./all-plane-serve/node_modules
+./all-plane-manage/node_modules
 
 # Editor directories and files
 .idea
