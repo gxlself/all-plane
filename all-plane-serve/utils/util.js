@@ -28,7 +28,7 @@ const checkString = function(str) {
 }
 // 校验数字
 const checkNumber = function(num) {
-  console.log(`num is ${num} type is ${typeof num}`)
+  // console.log(`num is ${num} type is ${typeof num}`)
   if (num === undefined || num === null) {
     return false
   }

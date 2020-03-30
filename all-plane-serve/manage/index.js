@@ -26,10 +26,10 @@ router.get('/permission', (req, res, next) => {
 
 /* 添加菜单 */
 router.post('/menu/add', (req, res, next) => {
-  const {name, sort, type, icon, parentId} = req.body
+  const {menu_name, sort, type, icon, url, parentId} = req.body
   let parent_id = 0
-  if (!checkString(name)) {
-    res.send(eMsg('name is invalid'))
+  if (!checkString(menu_name)) {
+    res.send(eMsg('menu_name is invalid'))
     return
   }
   if (!checkNumber(sort)) {
@@ -46,7 +46,7 @@ router.post('/menu/add', (req, res, next) => {
     parent_id = parentId
   }
   let create_date = currentTime()
-  const sql = `INSERT INTO m_menus (menu_name, sort, type, icon, parent_id, create_date) VALUES('${name}', ${Number(sort)}, ${Number(type)}, '${icon || ''}', '${parent_id}', '${create_date}');`
+  const sql = `INSERT INTO m_menus (menu_name, sort, type, icon, parent_id, url, create_date) VALUES('${menu_name}', ${Number(sort)}, ${Number(type)}, '${icon || ''}', '${parent_id}', '${url}','${create_date}');`
   sqlTodo(sql)
     .then(result => {
       res.send(sMsg(null))
@@ -58,20 +58,20 @@ router.post('/menu/add', (req, res, next) => {
 })
 /* 修改菜单 */
 router.post('/menu/alter', (req, res, next) => {
-  const {name, sort, id, icon} = req.body
+  const {menu_name, sort, id, icon, url, parentId, type} = req.body
   if (!checkNumber(id)) {
     res.send(eMsg('id is invalid'))
     return
   }
-  if (!checkString(name)) {
-    res.send(eMsg('name is invalid'))
+  if (!checkString(menu_name)) {
+    res.send(eMsg('menu_name is invalid'))
     return
   }
   if (!checkNumber(sort)) {
     res.send(eMsg('sort is invalid'))
     return
   }
-  const sql = `UPDATE m_menus SET menu_name='${name}',sort=${Number(sort)},icon='${icon}' WHERE id=${Number(id)};`
+  const sql = `UPDATE m_menus SET menu_name='${menu_name}',sort=${Number(sort)},icon='${icon}',url='${url}' WHERE id=${Number(id)};`
   sqlTodo(sql)
     .then(result => {
       if (result.affectedRows === 0) {
@@ -89,8 +89,8 @@ router.post('/menu/alter', (req, res, next) => {
 /* 删除菜单 */
 router.post('/menu/delete', (req, res, next) => {
   const { id } = req.body
-  if (!checkString(id)) {
-    res.send(eMsg('id is invalid'))
+  if (!checkNumber(id)) {
+    res.send(eMsg('id is invalid, id must be number'))
     return
   }
   const sql = `DELETE FROM m_menus WHERE id=${Number(id)};`
@@ -105,7 +105,7 @@ router.post('/menu/delete', (req, res, next) => {
 })
 /* 获取菜单列表 */
 router.get('/menu/list', (req, res, next) => {
-  const { page, size, parentId } = req.query
+  const { page, size, parentId, name, enable } = req.query
   if (!checkNumber(page)) {
     res.send(eMsg('page is invalid'))
     return
@@ -114,8 +114,9 @@ router.get('/menu/list', (req, res, next) => {
     res.send(eMsg('size is invalid'))
     return
   }
-  const listSql = `SELECT * FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 0} LIMIT ${(Number(page) - 1) * Number(size)}, ${Number(page) * Number(size)}`
+  const listSql = `SELECT * FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 0}${name ? ' AND name=' + name : ''}${enable === '0' ? ' AND enable=0' : (enable === '1' ? ' AND enable=1':'')} LIMIT ${(Number(page) - 1) * Number(size)}, ${Number(page) * Number(size)}`
   const countSql = `SELECT COUNT(*) AS count FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 0}`
+  console.log('listSql', listSql)
   sqlTodo(listSql)
     .then(list => { 
       sqlTodo(countSql)

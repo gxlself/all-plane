@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-export function getMenus(options) {
+export function getMenus(params) {
   return request({
     url: '/menu/list',
     method: 'get',
-    params: options
+    params
   })
 }
 
