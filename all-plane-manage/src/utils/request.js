@@ -1,29 +1,24 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { getToken, getName } from '@/utils/auth'
 
 // create an axios instance
+console.log('baseURL', process.env.VUE_APP_BASE_API)
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   timeout: 5000 // request timeout
 })
 
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
-
     if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
-      config.headers['X-Token'] = getToken()
+      config.headers['authorization'] = `${getToken()},${getName()}`
     }
     return config
   },
   error => {
-    // do something with request error
     console.log(error) // for debug
     return Promise.reject(error)
   }
@@ -31,44 +26,37 @@ service.interceptors.request.use(
 
 // response interceptor
 service.interceptors.response.use(
-  /**
-   * If you want to get http information such as headers or status
-   * Please return  response => response
-  */
-
-  /**
-   * Determine the request status by custom code
-   * Here is just an example
-   * You can also judge the status by HTTP Status Code
-   */
   response => {
-    const res = response.data
-
-    // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
+    if (response.status === 401 || response.data.status === 401) {
       Message({
-        message: res.message || 'Error',
+        message: response.data.msg || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
-
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        // to re-login
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
+      MessageBox.confirm('你的登录状态已经失效，请重新登录', '确认登录', {
+        confirmButtonText: '重新登录',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        store.dispatch('user/resetToken').then(() => {
+          location.reload()
         })
-      }
-      return Promise.reject(new Error(res.message || 'Error'))
-    } else {
-      return res
+      })
+      return Promise.reject(new Error(response.message || 'Error'))
     }
+    if (response.status === 200) {
+      if (response.data.code === 0) {
+        return response.data
+      } else {
+        Message({
+          message: response.data.msg || 'Error',
+          type: 'error',
+          duration: 5 * 1000
+        })
+        return Promise.reject(new Error(response.data.msg || 'Error'))
+      }
+    }
+    return Promise.reject(new Error(response.message || 'Error'))
   },
   error => {
     console.log('err' + error) // for debug
@@ -77,7 +65,7 @@ service.interceptors.response.use(
       type: 'error',
       duration: 5 * 1000
     })
-    return Promise.reject(error)
+    return Promise.reject(error.message)
   }
 )
 

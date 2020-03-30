@@ -65,10 +65,7 @@ export default {
       this.emitInput(file.files.file)
     },
     beforeUpload() {
-      const _self = this
-      return new Promise((resolve, reject) => {
-       
-      })
+      return new Promise((resolve, reject) => {})
     }
   }
 }

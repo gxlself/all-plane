@@ -114,8 +114,8 @@ router.get('/menu/list', (req, res, next) => {
     res.send(eMsg('size is invalid'))
     return
   }
-  const listSql = `SELECT * FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 1} LIMIT ${(Number(page) - 1) * Number(size)}, ${Number(page) * Number(size)}`
-  const countSql = `SELECT COUNT(*) AS count FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 1}`
+  const listSql = `SELECT * FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 0} LIMIT ${(Number(page) - 1) * Number(size)}, ${Number(page) * Number(size)}`
+  const countSql = `SELECT COUNT(*) AS count FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 0}`
   sqlTodo(listSql)
     .then(list => { 
       sqlTodo(countSql)
@@ -135,6 +135,33 @@ router.get('/menu/list', (req, res, next) => {
     });
   data = null;
 }) 
+/* 启用/禁用菜单 */
+router.post('/menu/updateEnable', (req, res, next) => {
+  const { id, enable } = req.body
+  if (!checkNumber(id)) {
+    res.send(eMsg('id is invalid'))
+    return
+  }
+  if (!checkNumber(enable)) {
+    res.send(eMsg('enable is invalid'))
+    return
+  }
+  const updateSql = `UPDATE m_menus SET enable=${Number(enable)} WHERE id=${id}`
+  sqlTodo(updateSql)
+    .then(result => {
+      if (result.affectedRows === 0) {
+        logger.error(`启用/禁用菜单异常sql ====== ${updateSql}`)
+        res.send(eMsg())
+      } else {
+        logger.error(`启用/禁用菜单异常sql ====== ${updateSql}`)
+        res.send(sMsg())
+      }
+    })
+    .catch(err => {
+      logger.error(`启用/禁用菜单异常sql ====== ${updateSql}`)
+      res.send(eMsg())
+    })
+})
 
 /* 添加角色 */
 router.post('/roles/add', (req, res, next) => {
