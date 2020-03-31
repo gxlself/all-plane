@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v12.09 (64 bit)
-MySQL - 5.0.87-community-nt : Database - allplant
+SQLyog Professional v12.08 (64 bit)
+MySQL - 5.0.96-community-nt : Database - allplant
 *********************************************************************
 */
 
@@ -12,7 +12,7 @@ MySQL - 5.0.87-community-nt : Database - allplant
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`allplant` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`allplant` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `allplant`;
 
@@ -58,11 +58,11 @@ CREATE TABLE `m_menus` (
   `url` varchar(60) default NULL COMMENT '页面路径',
   `enable` tinyint(1) NOT NULL default '1' COMMENT '是否可用',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8;
 
 /*Data for the table `m_menus` */
 
-insert  into `m_menus`(`id`,`menu_name`,`type`,`icon`,`sort`,`parent_id`,`create_date`,`url`,`enable`) values (82,'菜单管理',1,'el-menu',1,0,'2020-03-30 22:54:02','/menu',1),(119,'菜单管理2',1,'el-1',2,0,'2020-03-30 23:28:05','/menu2',0),(120,'菜单管理3',1,'el-2',3,0,'2020-03-30 23:28:23','/menu3',0);
+insert  into `m_menus`(`id`,`menu_name`,`type`,`icon`,`sort`,`parent_id`,`create_date`,`url`,`enable`) values (82,'菜单管理',1,'el-menu',1,0,'2020-03-30 22:54:02','/menu/list',0),(119,'角色管理',1,'el-sss',2,0,'2020-03-30 23:28:05','/roles/list',0),(125,'dwdwdw',1,'',0,82,'2020-03-31 21:49:59','/dw',1);
 
 /*Table structure for table `m_message` */
 

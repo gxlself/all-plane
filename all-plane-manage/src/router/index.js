@@ -114,7 +114,7 @@ export const asyncRoutes = [
         path: 'list',
         component: () => import('@/views/menu/list'),
         name: 'MenuList',
-        meta: { title: '菜单管理', icon: 'component', noCache: true }
+        meta: { title: '菜单管理', icon: 'component' }
       }
     ]
   },

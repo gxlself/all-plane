@@ -15,7 +15,7 @@ const logger = require('../utils/log').useLog('menus')
  * @description: 添加菜单
  */
 
-const addMenu = function(req, res, next) {
+const addMenu = (req, res, next) => {
   const {menu_name, sort, type, icon, url, parentId} = req.body
   let parent_id = 0
   if (!checkString(menu_name)) {
@@ -50,7 +50,7 @@ const addMenu = function(req, res, next) {
 /**
  * @description: 更新菜单
  */
-const alterMenu = function(req, res, next) {
+const alterMenu = (req, res, next) => {
   const {menu_name, sort, id, icon, url, parentId, type} = req.body
   if (!checkNumber(id)) {
     res.send(eMsg('id is invalid'))
@@ -82,7 +82,7 @@ const alterMenu = function(req, res, next) {
 /**
  * @description: 删除菜单
  */
-const delMenu = function(req, res, next) {
+const delMenu = (req, res, next) => {
   const { id } = req.body
   if (!checkNumber(id)) {
     res.send(eMsg('id is invalid, id must be number'))
@@ -101,7 +101,7 @@ const delMenu = function(req, res, next) {
 /**
  * @description: 菜单列表
  */
-const menuList = function(req, res, next) {
+const menuList = (req, res, next) => {
   const { page, size, parentId, name, enable } = req.query
   if (!checkNumber(page)) {
     res.send(eMsg('page is invalid'))
@@ -113,10 +113,12 @@ const menuList = function(req, res, next) {
   }
   const listSQL = `SELECT * FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 0} AND menu_name LIKE "%${name}%" AND enable LIKE "%${enable}%" LIMIT ${(Number(page) - 1) * Number(size)}, ${Number(page) * Number(size)}`
   const countSQL = `SELECT COUNT(*) AS count FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 0}`
-
   Promise.all([sqlTodo(listSQL), sqlTodo(countSQL)])
     .then(values => {
-      res.send(sMsg({list: values[0], count: values[1][0].count})); 
+      let timer = setTimeout(() => {
+        res.send(sMsg({list: values[0], count: values[1][0].count})); 
+        clearTimeout(timer)
+      }, 2000)
     })
     .catch(err => {
       logger.error(`获取菜单列表异常 ====== ${err.message}`);
@@ -127,7 +129,7 @@ const menuList = function(req, res, next) {
 /**
  * @description: 启用状态修改
  */
-const menuEnable = function(req, res, next) {
+const menuEnable = (req, res, next) => {
   const { id, enable } = req.body
 if (!checkNumber(id)) {
   res.send(eMsg('id is invalid'))
@@ -153,10 +155,20 @@ sqlTodo(updateSQL)
     res.send(eMsg())
   })
 }
+
+/**
+ * @description: 菜单树
+ */
+const menuTreeData = (req, res, next) => {
+  // completeMenus()
+  res.send(sMsg())
+}
+
 module.exports = {
   addMenu,
   alterMenu,
   delMenu,
   menuList,
-  menuEnable
+  menuEnable,
+  menuTreeData
 }

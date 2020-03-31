@@ -9,7 +9,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { addMenu, alterMenu, delMenu, menuList, menuEnable } = require('./menus')
+const { addMenu, alterMenu, delMenu, menuList, menuEnable, menuTreeData } = require('./menus')
 const { addRoles, alterRoles, delRoles, rolesList, rolesAuth, rolesEnable } = require('./roles')
 const { loginout } = require('./login')
 const { userinfo } = require('./user')
@@ -33,6 +33,8 @@ router.post('/menu/delete', delMenu)
 router.get('/menu/list', menuList) 
 /* 启用/禁用菜单 */
 router.post('/menu/updateEnable', menuEnable)
+/* 返回菜单树 */
+router.get('menu/treeData', menuTreeData)
 
 /* 添加角色 */
 router.post('/roles/add', addRoles)
@@ -49,6 +51,7 @@ router.post('/roles/updateEnable', rolesEnable)
 
 /* 新建公告 */
 router.post('/message/addMessage', addMessage);
+
 
 
 module.exports = router;

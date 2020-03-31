@@ -12,7 +12,7 @@
         搜索
       </el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="openMenuForm('add')">
-        新增
+        新增一级菜单
       </el-button>
     </div>
     <!-- 表格 -->
@@ -29,26 +29,27 @@
       style="width: 100%"
       @expand-change="expandChange"
     >
-      <el-table-column type="expand">
+      <!-- 展开行 展示二级菜单表格 -->
+      <el-table-column type="expand" fixed>
         <template slot-scope="{row}">
           <el-table
-            v-loading="secTableLoading[row.id]"
+            v-loading="otherTableLoading[row.id]"
             element-loading-text="加载中~"
             element-loading-background="rgba(0, 0, 0, 0.5)"
             element-loading-spinner="el-icon-loading"
-            :data="secTableList[row.id]"
+            :data="otherTableList[row.id]"
             border
             fit
             highlight-current-row
             size="mini"
             style="width: 100%"
           >
-            <el-table-column align="center" label="二级菜单名称" width="200">
+            <el-table-column align="center" label="二级菜单名称">
               <template slot-scope="scope">
                 <span>{{ scope.row.menu_name }}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="页面路径" width="300">
+            <el-table-column align="center" label="页面路径">
               <template slot-scope="scope">
                 <span>{{ scope.row.url }}</span>
               </template>
@@ -70,21 +71,25 @@
                 <span>{{ scope.row.sort }}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="操作" width="450">
+            <el-table-column align="center" label="操作" width="300">
               <template slot-scope="scope">
-                <el-button type="primary" size="mini" icon="el-icon-edit" @click="editMenu(scope.row)">
+                <el-button type="primary" size="mini" icon="el-icon-edit" @click="editMenu(scope.row, row.id)">
                   编辑
                 </el-button>
-                <el-button v-if="row.enable == 0" size="mini" icon="el-icon-success" type="success" @click="updateEnable(scope.row)">
+                <el-button v-if="scope.row.enable == 0" size="mini" icon="el-icon-success" type="success" @click="updateEnable(scope.row, row.id)">
                   启用
                 </el-button>
-                <el-button v-if="row.enable == 1" size="mini" icon="el-icon-warning" type="danger" @click="updateEnable(scope.row)">
+                <el-button v-if="scope.row.enable == 1" size="mini" icon="el-icon-warning" type="danger" @click="updateEnable(scope.row, row.id)">
                   禁用
                 </el-button>
-                <el-button size="mini" icon="el-icon-plus" type="primary" @click="addSubMenu(scope.row)">
-                  添加下级菜单
+                <!-- 暂时不加三级菜单 -->
+                <!-- <el-button size="mini" icon="el-icon-view" type="primary" @click="openThirdList(scope.row.id)">
+                  查看三级菜单
                 </el-button>
-                <el-button size="mini" type="danger" icon="el-icon-delete" @click="delteMenu(scope.row, scope.$index)">
+                <el-button size="mini" icon="el-icon-plus" type="primary" @click="addOrEditSubMenu(scope.row)">
+                  添加三级菜单
+                </el-button> -->
+                <el-button size="mini" type="danger" icon="el-icon-delete" @click="delteMenu(scope.row, row.id)">
                   删除
                 </el-button>
               </template>
@@ -124,8 +129,8 @@
           <span>{{ row.sort }}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="450">
-        <template slot-scope="{row, $index}">
+      <el-table-column align="center" label="操作" width="450">
+        <template slot-scope="{row}">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="editMenu(row)">
             编辑
           </el-button>
@@ -135,17 +140,17 @@
           <el-button v-if="row.enable == 1" size="mini" icon="el-icon-warning" type="danger" @click="updateEnable(row)">
             禁用
           </el-button>
-          <el-button size="mini" icon="el-icon-plus" type="primary" @click="addSubMenu(row)">
-            添加下级菜单
+          <el-button size="mini" icon="el-icon-plus" type="primary" @click="addOrEditSubMenu(row)">
+            添加二级菜单
           </el-button>
-          <el-button size="mini" type="danger" icon="el-icon-delete" @click="delteMenu(row, $index)">
+          <el-button size="mini" type="danger" icon="el-icon-delete" @click="delteMenu(row)">
             删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <!-- 弹框 -->
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="menuFormVisible" lock-scroll destroy-on-close width="500px" @closed="sureLoading = false">
+    <!-- 增加菜单弹框 -->
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="menuFormVisible" lock-scroll destroy-on-close width="500px" @closed="dialogClose">
       <el-form ref="dataForm" :rules="rules" :model="menuParams" label-position="left" label-width="130px" style="width: 400px;margin-left:30px;">
         <el-form-item label="菜单名称：" prop="menu_name">
           <el-input v-model="menuParams.menu_name" />
@@ -164,10 +169,72 @@
         <el-button @click="menuFormVisible = false">
           取消
         </el-button>
-        <el-button :loading="sureLoading" :disabled="sureLoading" type="primary" @click="addOrEditorMenu()">
+        <el-button :loading="sureLoading" :disabled="sureLoading" type="primary" @click="addOrEditorMenu">
           确认
         </el-button>
       </div>
+    </el-dialog>
+    <!-- 显示三级菜单弹框 -->
+    <el-dialog title="三级菜单列表" :visible.sync="thirdListVisible" lock-scroll destroy-on-close width="900px" @closed="closeThirdList">
+      <el-table
+        v-loading="thirdListLoading"
+        element-loading-text="加载中~"
+        element-loading-background="rgba(0, 0, 0, 0.5)"
+        element-loading-spinner="el-icon-loading"
+        :data="thirdList"
+        border
+        fit
+        highlight-current-row
+        size="mini"
+        style="width: 100%"
+      >
+        <el-table-column align="center" label="三级菜单名称" width="200">
+          <template slot-scope="{row}">
+            <span>{{ row.menu_name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="页面路径" width="300">
+          <template slot-scope="{row}">
+            <span>{{ row.url }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="显示图标">
+          <template slot-scope="{row}">
+            <span>{{ row.icon }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="是否可用">
+          <template slot-scope="{row}">
+            <el-tag :type="row.enable | statusFilter">
+              {{ row.enable | enable }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="排序">
+          <template slot-scope="{row}">
+            <span>{{ row.sort }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="操作" width="450">
+          <template slot-scope="{row}">
+            <el-button type="primary" size="mini" icon="el-icon-edit" @click="editMenu(row, row.id)">
+              编辑
+            </el-button>
+            <el-button v-if="row.enable == 0" size="mini" icon="el-icon-success" type="success" @click="updateEnable(row.id)">
+              启用
+            </el-button>
+            <el-button v-if="row.enable == 1" size="mini" icon="el-icon-warning" type="danger" @click="updateEnable(row.id)">
+              禁用
+            </el-button>
+            <el-button size="mini" icon="el-icon-plus" type="primary" @click="addOrEditSubMenu(row)">
+              添加按钮
+            </el-button>
+            <el-button size="mini" type="danger" icon="el-icon-delete" @click="delteMenu(row, row.id)">
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </el-dialog>
     <!-- 分页 -->
     <pagination v-show="total > 0" :total="total" :page.sync="firstMenuQuery.page" :limit.sync="firstMenuQuery.size" @pagination="getList" />
@@ -209,11 +276,6 @@ export default {
         name: '',
         enable: ''
       },
-      secMenuQuery: {
-        page: 1,
-        size: 10,
-        parentId: null
-      },
       total: 0, // 所有数据
       menuParams: {
         menu_name: '',
@@ -235,9 +297,12 @@ export default {
         menuParams: null
       },
       sureLoading: false, // 添加、编辑菜单时确认按钮
-      secTableLoading: {}, // 二级菜单表格
-      secTableList: {}, // 二级菜单数据
-      floor: null
+      otherTableLoading: {}, // 二级菜单表格
+      otherTableList: {}, // 二级菜单数据
+      parentId: null, // 当前父节点id
+      thirdListVisible: false, // 三级表弹框控制
+      thirdList: null, // 三级表数据
+      thirdListLoading: false
     }
   },
   created() {
@@ -252,28 +317,35 @@ export default {
         const { data } = await getMenus(this.firstMenuQuery)
         this.list = Object.assign([], data.list)
         this.total = data.count
-        this.listLoading = false
       } catch (e) {
-        this.listLoading = false
+        console.log(e)
       }
+      this.listLoading = false
     },
     // 编辑
-    editMenu(row) {
+    editMenu(row, parentId) {
+      if (parentId) {
+        this.parentId = parentId
+      }
       this.openMenuForm('editor', row)
     },
     // 删除
-    async delteMenu(row) {
+    async delteMenu(row, parentId) {
       this.listLoading = true
-      const { code } = await deleteMenu({ id: row.id })
-      this.listLoading = false
-      if (code === 0) {
-        Message({
-          message: '删除成功',
-          type: 'success',
-          duration: 2 * 1000
-        })
-        this.getList()
+      try {
+        await deleteMenu({ id: row.id })
+        this.openMsg('删除成功')
+        this.listLoading = false
+        if (parentId) {
+          await this.updateSubData(parentId)
+        } else {
+          this.listLoading = true
+          await this.getList()
+        }
+      } catch (e) {
+        console.log(e)
       }
+      this.listLoading = false
     },
     // 添加菜单
     async addOrEditorMenu() {
@@ -283,32 +355,55 @@ export default {
       }
       this.sureLoading = true
       this.listLoading = true
-      const { code } = this.dialogStatus === 'add' ? await addMenu(this.menuParams) : await updateMenu(this.menuParams)
-      this.menuFormVisible = false
-      if (code === 0) {
-        this.openMsg('添加成功')
-        this.getList()
-      } else {
-        this.listLoading = false
+      const query = {}
+      for (const key in this.menuParams) {
+        query[key] = this.menuParams[key]
       }
+      if (this.parentId) {
+        query.parentId = this.parentId
+      }
+      try {
+        this.dialogStatus === 'add' ? await addMenu(query) : await updateMenu(query)
+        this.menuFormVisible = false
+        this.listLoading = false
+        this.openMsg('请求成功')
+        if (this.parentId) {
+          await this.updateSubData(this.parentId)
+        } else {
+          this.listLoading = true
+          await this.getList()
+        }
+      } catch (err) {
+        console.log(err)
+      }
+      this.listLoading = false
     },
     // 添加下级菜单
-    async addSubMenu(row) {
+    async addOrEditSubMenu(row) {
+      this.parentId = row.id
+      this.openMenuForm('add')
     },
     // 启用禁用
-    async updateEnable(row) {
+    async updateEnable(row, parentId) {
       this.listLoading = true
       const options = {
         id: row.id,
         enable: row.enable === 1 ? 0 : 1
       }
-      const { code, msg } = await updateEnable(options)
-      if (code === 0) {
+      try {
+        const { msg } = await updateEnable(options)
         this.openMsg(msg)
-        this.getList()
-      } else {
         this.listLoading = false
+        if (parentId) {
+          await this.updateSubData(parentId)
+        } else {
+          this.listLoading = true
+          await this.getList()
+        }
+      } catch (err) {
+        console.log(err)
       }
+      this.listLoading = false
     },
     // 二次封装消息提示
     openMsg(message, type = 'success') {
@@ -318,7 +413,7 @@ export default {
     openMenuForm(status, row) {
       this.dialogStatus = status
       if (status === 'editor') {
-        this.menuParams = row
+        this.menuParams = Object.assign({}, row)
       } else {
         this.init()
       }
@@ -338,28 +433,49 @@ export default {
     },
     // 展开 开始获取二级菜单数据
     async expandChange(row, expandedRows, expanded) {
-      if (expandedRows.includes(row) && !this.secTableList[row.id]) {
-        this.$set(this.secTableLoading, row.id, true)
-        const query = {
-          page: 1,
-          size: 15,
-          parentId: row.id
-        }
-        const { data, code } = await getMenus(query)
-        if (code === 0) {
-          this.$set(this.secTableList, row.id, data.list)
-        }
-        this.$set(this.secTableLoading, row.id, false)
+      if (expandedRows.includes(row)) {
+        this.updateSubData(row.id)
       }
     },
     // 获取二级或者三级菜单数据
-    async getOtherList() {
-
+    async getOtherList(id) {
+      const query = {
+        page: 1,
+        size: 15,
+        name: '',
+        enable: '',
+        parentId: id
+      }
+      try {
+        const { data } = await getMenus(query)
+        return data.list
+      } catch (err) {
+        return []
+      }
+    },
+    // 弹框关闭时回调
+    dialogClose() {
+      this.sureLoading = false
+      this.parentId = null
+    },
+    // 更新下级数据
+    async updateSubData(parentId) {
+      this.$set(this.otherTableLoading, parentId, true)
+      const list = await this.getOtherList(parentId)
+      this.$set(this.otherTableList, parentId, list)
+      this.$set(this.otherTableLoading, parentId, false)
+    },
+    // 查看三级菜单
+    async openThirdList(parentId) {
+      this.thirdListVisible = true
+      this.thirdListLoading = true
+      this.thirdList = await this.getOtherList(parentId)
+      this.thirdListLoading = false
+    },
+    // 关闭三级表
+    closeThirdList() {
+      this.thirdList = null
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
