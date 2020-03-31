@@ -1,7 +1,8 @@
-// {sqlTodo, sMsg, eMsg, perLogger, req, res, next}
+const { sMsg, eMsg } = require('../utils/send')
+const logger = require('../utils/log').useLog('permission')
+const permission = (req, res, next) => {
+  res.send(sMsg())
+}
 module.exports = {
-  permission(params) {
-    const {sqlTodo, sMsg, eMsg, perLogger, req, res, next} = params
-    
-  }
+  permission
 }
