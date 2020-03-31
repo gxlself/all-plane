@@ -351,6 +351,10 @@ export default {
         }
         this.$set(this.secTableLoading, row.id, false)
       }
+    },
+    // 获取二级或者三级菜单数据
+    async getOtherList() {
+
     }
   }
 }

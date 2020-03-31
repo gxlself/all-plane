@@ -1,6 +1,6 @@
 /*
-SQLyog Professional v12.08 (64 bit)
-MySQL - 5.0.96-community-nt : Database - allplant
+SQLyog Ultimate v12.09 (64 bit)
+MySQL - 5.0.87-community-nt : Database - allplant
 *********************************************************************
 */
 
@@ -12,7 +12,7 @@ MySQL - 5.0.96-community-nt : Database - allplant
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`allplant` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`allplant` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
 USE `allplant`;
 
@@ -58,11 +58,11 @@ CREATE TABLE `m_menus` (
   `url` varchar(60) default NULL COMMENT '页面路径',
   `enable` tinyint(1) NOT NULL default '1' COMMENT '是否可用',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8;
 
 /*Data for the table `m_menus` */
 
-insert  into `m_menus`(`id`,`menu_name`,`type`,`icon`,`sort`,`parent_id`,`create_date`,`url`,`enable`) values (52,'二级菜单（1）',1,'el-plus',0,42,'2020-03-28 15:25:23',NULL,1),(53,'二级菜单（2）',1,'el-ps',0,42,'2020-03-28 15:25:27',NULL,1),(54,'二级菜单（3）',1,'el-pu',0,42,'2020-03-28 15:25:30',NULL,1),(55,'二级菜单（4）',1,'el-plus',0,42,'2020-03-28 15:25:32',NULL,1),(56,'二级菜单（1）',1,'el-plus',0,43,'2020-03-28 15:25:41',NULL,1),(57,'二级菜单（1）',1,'el-plus',0,44,'2020-03-28 15:25:44',NULL,1),(58,'二级菜单（1）',1,'el-plus',0,45,'2020-03-28 15:25:47',NULL,1),(59,'二级菜单（1）',1,'el-plus',0,46,'2020-03-28 15:25:49',NULL,1),(60,'二级菜单（1）',1,'el-plus',0,47,'2020-03-28 15:25:52',NULL,1),(61,'二级菜单（1）',1,'el-plus',0,48,'2020-03-28 15:26:19',NULL,1),(62,'二级菜单（1）',1,'el-plus',0,49,'2020-03-28 15:26:22',NULL,1),(63,'二级菜单（1）',1,'el-plus',0,50,'2020-03-28 15:26:24',NULL,1),(64,'二级菜单（1）',1,'el-plus',0,51,'2020-03-28 15:26:28',NULL,1),(65,'二级菜单（1）',1,'el-plus',0,52,'2020-03-28 15:26:32',NULL,1),(66,'三级菜单（1）',1,'el-plus',0,52,'2020-03-28 15:27:15',NULL,1),(67,'三级菜单（1）',1,'el-plus',0,53,'2020-03-28 15:27:21',NULL,1),(68,'三级菜单（1）',1,'el-plus',0,54,'2020-03-28 15:27:24',NULL,1),(69,'三级菜单（1）',1,'el-plus',0,55,'2020-03-28 15:27:28',NULL,1),(70,'三级菜单（1）',1,'el-plus',0,56,'2020-03-28 15:27:31',NULL,1),(71,'三级菜单（1）',1,'el-plus',0,57,'2020-03-28 15:27:34',NULL,1),(72,'三级菜单（1）',1,'el-plus',0,58,'2020-03-28 15:27:37',NULL,1),(73,'三级菜单（1）',1,'el-plus',0,59,'2020-03-28 15:27:40',NULL,1),(74,'三级菜单（1）',1,'el-plus',0,60,'2020-03-28 15:27:43',NULL,1),(75,'三级菜单（1）',1,'el-plus',0,61,'2020-03-28 15:27:46',NULL,1),(76,'三级菜单（1）',1,'el-plus',0,62,'2020-03-28 15:27:50',NULL,1),(77,'三级菜单（1）',1,'el-plus',0,63,'2020-03-28 15:27:53',NULL,1),(78,'三级菜单（1）',1,'el-plus',0,64,'2020-03-28 15:27:56',NULL,1),(82,'菜单管理',1,'el-menu',1,0,'2020-03-30 22:54:02','/menu',1),(119,'菜单管理2',1,'',2,0,'2020-03-30 23:28:05','/menu2',0),(120,'菜单管理3',1,'',3,0,'2020-03-30 23:28:23','/menu3',0);
+insert  into `m_menus`(`id`,`menu_name`,`type`,`icon`,`sort`,`parent_id`,`create_date`,`url`,`enable`) values (82,'菜单管理',1,'el-menu',1,0,'2020-03-30 22:54:02','/menu',1),(119,'菜单管理2',1,'el-1',2,0,'2020-03-30 23:28:05','/menu2',0),(120,'菜单管理3',1,'el-2',3,0,'2020-03-30 23:28:23','/menu3',0);
 
 /*Table structure for table `m_message` */
 
@@ -93,12 +93,15 @@ CREATE TABLE `m_roles` (
   `id` int(3) NOT NULL auto_increment,
   `role_name` varchar(10) NOT NULL,
   `menus` text,
+  `enable` tinyint(1) NOT NULL default '1',
+  `last_modify` datetime NOT NULL,
+  `create_date` datetime NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `m_roles` */
 
-insert  into `m_roles`(`remark`,`id`,`role_name`,`menus`) values ('这是管理员',2,'管理员','[10,20,15,16,17]'),('这是运营',3,'运营',NULL);
+insert  into `m_roles`(`remark`,`id`,`role_name`,`menus`,`enable`,`last_modify`,`create_date`) values ('这是管理员',2,'管理员','[10,20,15,16,17]',0,'2020-03-11 17:46:47','2020-03-10 17:27:14'),('运营',4,'运营',NULL,0,'2020-03-04 17:46:50','2020-03-04 17:27:14'),('运营1',5,'运营1',NULL,1,'2020-03-06 17:46:52','2020-03-03 17:27:14'),('运营2',6,'运营2',NULL,1,'2020-03-06 17:46:54','2020-03-09 17:27:14'),('123456',7,'测试',NULL,0,'2020-03-31 17:27:14','2020-03-31 17:27:14');
 
 /*Table structure for table `m_token` */
 
