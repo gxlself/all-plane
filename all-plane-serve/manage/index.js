@@ -1,7 +1,16 @@
+/*
+ * @Description: 管理系统路由index
+ * @Version: 1.0
+ * @Authoe: gxlself
+ * @Date: 2020-03-30 10:53:02
+ * @LastRditors: gxlself
+ * @LastEditTime: 2020-03-31 18:26:00
+ */
+
 const express = require('express');
 const router = express.Router();
 const { addMenu, alterMenu, delMenu, menuList, menuEnable } = require('./menus')
-const { addRoles, alterRoles, delRoles, rolesList, rolesAuth } = require('./roles')
+const { addRoles, alterRoles, delRoles, rolesList, rolesAuth, rolesEnable } = require('./roles')
 const { loginout } = require('./login')
 const { userinfo } = require('./user')
 const { permission } = require('./permission')
@@ -35,6 +44,8 @@ router.post('/roles/delete', delRoles)
 router.get('/roles/list', rolesList) 
 /* 角色授权 */
 router.post('/roles/auth', rolesAuth)
+/* 启用/禁用菜单 */
+router.post('/roles/updateEnable', rolesEnable)
 
 /* 新建公告 */
 router.post('/message/addMessage', addMessage);

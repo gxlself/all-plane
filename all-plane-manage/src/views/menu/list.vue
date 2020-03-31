@@ -4,11 +4,11 @@
     <div class="filter-container">
       <el-input v-model="firstMenuQuery.name" placeholder="菜单名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-select v-model="firstMenuQuery.enable" placeholder="是否启用" style="width: 140px" class="filter-item" @change="getList()">
-        <el-option label="全部" value="-1" />
+        <el-option label="全部" value="" />
         <el-option label="启用" :value="1" />
         <el-option label="禁用" :value="0" />
       </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="getList()">
+      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="getList()">
         搜索
       </el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-plus" @click="openMenuForm('add')">
@@ -176,12 +176,10 @@
 
 <script>
 import { getMenus, addMenu, updateMenu, deleteMenu, updateEnable } from '@/api/menu'
-import waves from '@/directive/waves' // waves directive
 import { Message } from 'element-ui'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 export default {
   name: 'MenuList',
-  directives: { waves },
   filters: {
     enable(type) {
       const enableMap = {
@@ -250,10 +248,14 @@ export default {
     // 获取列表
     async getList() {
       this.listLoading = true
-      const { data } = await getMenus(this.firstMenuQuery)
-      this.list = Object.assign([], data.list)
-      this.total = data.count
-      this.listLoading = false
+      try {
+        const { data } = await getMenus(this.firstMenuQuery)
+        this.list = Object.assign([], data.list)
+        this.total = data.count
+        this.listLoading = false
+      } catch (e) {
+        this.listLoading = false
+      }
     },
     // 编辑
     editMenu(row) {
@@ -336,7 +338,7 @@ export default {
     },
     // 展开 开始获取二级菜单数据
     async expandChange(row, expandedRows, expanded) {
-      if (expandedRows.includes(row)) {
+      if (expandedRows.includes(row) && !this.secTableList[row.id]) {
         this.$set(this.secTableLoading, row.id, true)
         const query = {
           page: 1,
@@ -348,8 +350,6 @@ export default {
           this.$set(this.secTableList, row.id, data.list)
         }
         this.$set(this.secTableLoading, row.id, false)
-      } else {
-        this.$set(this.secTableList, row.id, [])
       }
     }
   }

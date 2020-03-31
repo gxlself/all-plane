@@ -9,7 +9,6 @@ const { tMsg, nMsg } = require('./utils/send')
 const routerIndex = require('./router/index')
 const manage = require('./manage/index');
 const mobile = require('./mobile/index');
-// const system = require('./system/index');
 
 // 实例express
 const app = express();
@@ -79,12 +78,11 @@ app.use(function (req, res, next) {
 // 前后路由开始
 app.use('/manage', manage);
 app.use('/mobile', mobile);
-// app.use('/system', system);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   // next(createError(404));
-  reqLog.warn(`请求warn ====== 无此接口`)
+  reqLog.warn(`请求warn ====== 无此接口(URL：${req.url})`)
   res.send(nMsg());
 });
 

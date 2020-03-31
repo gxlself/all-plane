@@ -1,7 +1,7 @@
 const { sqlTodo } = require('./sql')
 // 返回当前服务端时间
-const currentTime = function() {
-  let d = new Date()
+const currentTime = function(pointTime) {
+  let d = pointTime ? new Date(pointTime) : new Date()
   let year = d.getFullYear()
   let mon = checkSingle(d.getMonth() + 1)
   let day = checkSingle(d.getDate())

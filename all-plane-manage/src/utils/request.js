@@ -1,3 +1,9 @@
+/*
+ * @Description:
+ * @Version: 1.0
+ * @Authoe: gxlself
+ * @Date: 2020-03-30 10:53:01
+ */
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
@@ -44,19 +50,15 @@ service.interceptors.response.use(
       })
       return Promise.reject(new Error(response.message || 'Error'))
     }
-    if (response.status === 200) {
-      if (response.data.code === 0) {
-        return response.data
-      } else {
-        Message({
-          message: response.data.msg || 'Error',
-          type: 'error',
-          duration: 5 * 1000
-        })
-        return Promise.reject(new Error(response.data.msg || 'Error'))
-      }
+    if (response.status === 200 && response.data.code === 0) {
+      return response.data
     }
-    return Promise.reject(new Error(response.message || 'Error'))
+    Message({
+      message: response.data.msg || 'Error',
+      type: 'error',
+      duration: 5 * 1000
+    })
+    return Promise.reject(new Error(response.data.msg || 'Error'))
   },
   error => {
     console.log('err' + error) // for debug

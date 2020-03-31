@@ -109,13 +109,26 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/menu/list',
     name: 'Menu',
-    meta: { title: '菜单管理', icon: 'nested' },
     children: [
       {
         path: 'list',
         component: () => import('@/views/menu/list'),
         name: 'MenuList',
-        meta: { title: '菜单管理', icon: 'component' }
+        meta: { title: '菜单管理', icon: 'component', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/role',
+    component: Layout,
+    redirect: '/role/list',
+    name: 'Role',
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/roles/list'),
+        name: 'RoleList',
+        meta: { title: '角色管理', icon: 'component', noCache: true }
       }
     ]
   },

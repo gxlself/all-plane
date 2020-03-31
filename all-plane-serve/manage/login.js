@@ -1,3 +1,10 @@
+/*
+ * @Description: 登录登出封装
+ * @Version: 1.0
+ * @Authoe: gxlself
+ * @Date: 2020-03-31 11:29:02
+ */
+
 const md5 = require('md5');
 const { sqlTodo } = require('../utils/sql');
 const { createToken, verify } = require('../utils/jwt')
