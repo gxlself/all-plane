@@ -111,7 +111,7 @@ const menuList = (req, res, next) => {
     res.send(eMsg('size is invalid'))
     return
   }
-  const listSQL = `SELECT * FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 0} AND menu_name LIKE "%${name}%" AND enable LIKE "%${enable}%" LIMIT ${(Number(page) - 1) * Number(size)}, ${Number(page) * Number(size)}`
+  const listSQL = `SELECT * FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 0} AND menu_name LIKE "%${name}%" AND enable LIKE "%${enable}%" ORDER BY sort LIMIT ${(Number(page) - 1) * Number(size)}, ${Number(page) * Number(size)}`
   const countSQL = `SELECT COUNT(*) AS count FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 0}`
   Promise.all([sqlTodo(listSQL), sqlTodo(countSQL)])
     .then(values => {
