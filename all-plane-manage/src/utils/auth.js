@@ -19,3 +19,7 @@ export function getName() {
 export function setName(username) {
   return sessionStorage.setItem('username', username)
 }
+
+export function removeName() {
+  return sessionStorage.removeItem('username')
+}

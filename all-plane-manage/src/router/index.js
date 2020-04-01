@@ -132,6 +132,20 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/manage',
+    component: Layout,
+    redirect: '/peopleManage',
+    name: 'PeopleManage',
+    children: [
+      {
+        path: '/peopleManage',
+        component: () => import('@/views/people/list'),
+        name: 'peopleManage',
+        meta: { title: '人员管理', icon: 'component', noCache: true }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 

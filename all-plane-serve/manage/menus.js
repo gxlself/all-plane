@@ -4,10 +4,10 @@
  * @Authoe: gxlself
  * @Date: 2020-03-30 10:53:02
  * @LastRditors: gxlself
- * @LastEditTime: 2020-03-31 18:25:23
+ * @LastEditTime: 2020-04-01 15:26:56
  */
 const { sqlTodo } = require('../utils/sql');
-const { currentTime, checkString, checkNumber } = require('../utils/util')
+const { currentTime, checkString, checkNumber, completeMenus } = require('../utils/util')
 const { sMsg, eMsg } = require('../utils/send')
 const logger = require('../utils/log').useLog('menus')
 
@@ -26,7 +26,7 @@ const addMenu = (req, res, next) => {
     res.send(eMsg('sort is invalid'))
     return
   }
-  if (!checkNumber(type) || !(Number(type) === 1 || Number(type) === 2)) {
+  if (!checkNumber(type) || !(Number(type) === 0 || Number(type) === 1)) {
     res.send(eMsg('type is invalid'))
     return
   }
@@ -118,7 +118,7 @@ const menuList = (req, res, next) => {
       let timer = setTimeout(() => {
         res.send(sMsg({list: values[0], count: values[1][0].count})); 
         clearTimeout(timer)
-      }, 2000)
+      }, 1000)
     })
     .catch(err => {
       logger.error(`获取菜单列表异常 ====== ${err.message}`);
@@ -143,15 +143,14 @@ const updateSQL = `UPDATE m_menus SET enable=${Number(enable)} WHERE id=${id}`
 sqlTodo(updateSQL)
   .then(result => {
     if (result.affectedRows === 0) {
-      logger.error(`启用/禁用菜单异常SQL ====== ${updateSQL}`)
+      logger.error(`启用/禁用菜单异常 SQL ====== ${updateSQL}`)
       res.send(eMsg())
     } else {
-      logger.error(`启用/禁用菜单异常SQL ====== ${updateSQL}`)
       res.send(sMsg())
     }
   })
   .catch(err => {
-    logger.error(`启用/禁用菜单异常SQL ====== ${updateSQL}`)
+    logger.error(`启用/禁用菜单异常 SQL ====== ${updateSQL}`)
     res.send(eMsg())
   })
 }
@@ -159,9 +158,15 @@ sqlTodo(updateSQL)
 /**
  * @description: 菜单树
  */
-const menuTreeData = (req, res, next) => {
+const menuTreeData = async (req, res, next) => {
   // completeMenus()
-  res.send(sMsg())
+  try {
+    const treeData = await completeMenus()
+    res.send(sMsg({treeData}))
+  } catch (err) {
+    logger.error(`获取菜单树异常 ====== ${err.message || '异常错误'}`)
+    res.send(eMsg())
+  }
 }
 
 module.exports = {

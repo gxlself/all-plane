@@ -45,3 +45,11 @@ export function updateEnable(data) {
     data
   })
 }
+
+export function rolesAuth(data) {
+  return request({
+    url: `roles/auth`,
+    method: 'post',
+    data
+  })
+}

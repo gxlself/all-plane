@@ -4,7 +4,7 @@
  * @Authoe: gxlself
  * @Date: 2020-03-31 11:23:41
  * @LastRditors: gxlself
- * @LastEditTime: 2020-03-31 18:25:32
+ * @LastEditTime: 2020-04-01 12:30:59
  */
 const { sqlTodo } = require('../utils/sql');
 const { checkString, checkNumber, completeMenus, currentTime } = require('../utils/util')
@@ -14,7 +14,7 @@ const logger = require('../utils/log').useLog('roles')
 /**
  * @description: 添加角色
  */
-const addRoles = function(req, res, next) {
+const addRoles = (req, res, next) => {
   const { role_name, remark } = req.body
   if (!checkString(role_name)) {
     res.send(eMsg('role_name is invalid'))
@@ -34,7 +34,7 @@ const addRoles = function(req, res, next) {
 /**
  * @description: 修改角色
  */
-const alterRoles = function(req, res, next) {
+const alterRoles = (req, res, next) => {
   const { name, remark, id } = req.body
   if (!checkString(name)) {
     res.send(eMsg('name is invalid'))
@@ -63,7 +63,7 @@ const alterRoles = function(req, res, next) {
 /**
  * @description: 删除角色
  */
-const delRoles = function(req, res, next) {
+const delRoles = (req, res, next) => {
   const { id } = req.body
   if (!checkNumber(id)) {
     res.send(eMsg('id is invalid'))
@@ -83,7 +83,7 @@ const delRoles = function(req, res, next) {
 /**
  * @description: 角色列表
  */
-const rolesList = function(req, res, next) {
+const rolesList = (req, res, next) => {
   const { role_name, page, size, enable } = req.query
   if (!checkNumber(page)) {
     res.send(eMsg('page is invalid'))
@@ -98,11 +98,20 @@ const rolesList = function(req, res, next) {
   Promise.all([sqlTodo(listSQL), sqlTodo(countSQL)])
     .then(values => {
       const list = values[0].map(item => {
+        if (item.menus === null || item.menus === '') {
+          item.menus = []
+        } else {
+          item.menus = JSON.parse(item.menus)
+        }
         item.last_modify = currentTime(item.last_modify)
+        item.create_date = currentTime(item.create_date)
         return item
       })
       const count = values[1][0].count
-      res.send(sMsg({list, count})); 
+      let timer = setTimeout(() => {
+        res.send(sMsg({list, count})); 
+        clearTimeout(timer)
+      }, 1000)
     })
     .catch(err => {
       logger.error(`获取角色列表异常 ====== ${err.message}`);
@@ -114,13 +123,13 @@ const rolesList = function(req, res, next) {
 /**
  * @description: 角色授权
  */
-const rolesAuth = function(req, res, next) {
+const rolesAuth = (req, res, next) => {
   const { menus, id } = req.body
   if (!checkNumber(id)) {
     res.send(eMsg('id is invalid'))
     return
   }
-  const SQL = `UPDATE m_roles SET menus='${menus}' WHERE id=${Number(id)}`
+  const SQL = `UPDATE m_roles SET menus='[${menus}]' WHERE id=${Number(id)}`
   sqlTodo(SQL)
     .then(result => {
       if (result.affectedRows === 0) {
@@ -140,7 +149,7 @@ const rolesAuth = function(req, res, next) {
 /**
  * @description: 启用状态修改
  */
-const rolesEnable = function(req, res, next) {
+const rolesEnable = (req, res, next) => {
   const { id, enable } = req.body
   if (!checkNumber(id)) {
     res.send(eMsg('id is invalid'))
@@ -157,7 +166,6 @@ const rolesEnable = function(req, res, next) {
         logger.error(`启用/禁用角色异常SQL ====== ${updateSQL}`)
         res.send(eMsg())
       } else {
-        logger.error(`启用/禁用角色异常SQL ====== ${updateSQL}`)
         res.send(sMsg())
       }
     })

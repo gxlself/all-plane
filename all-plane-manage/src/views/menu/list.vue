@@ -281,7 +281,7 @@ export default {
         menu_name: '',
         url: '',
         sort: '',
-        type: 1,
+        type: 0,
         icon: ''
       },
       textMap: {

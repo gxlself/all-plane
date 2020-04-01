@@ -21,7 +21,7 @@ let reqLog = log4js.useLog('request')
 let tokenLog = log4js.useLog('token')
 
 //设置跨域访问
-const allowCrossDomain = function(req, res, next) {
+const allowCrossDomain = (req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3335');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'authorization,content-Type');
@@ -80,7 +80,7 @@ app.use('/manage', manage);
 app.use('/mobile', mobile);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   // next(createError(404));
   reqLog.warn(`请求warn ====== 无此接口(URL：${req.url})`)
   res.send(nMsg());

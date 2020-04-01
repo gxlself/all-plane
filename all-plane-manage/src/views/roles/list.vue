@@ -66,7 +66,7 @@
           <el-button v-if="row.enable == 1" size="mini" icon="el-icon-warning" type="danger" @click="updateEnable(row)">
             禁用
           </el-button>
-          <el-button size="mini" icon="el-icon-setting" type="primary" @click="addSubMenu(row)">
+          <el-button size="mini" icon="el-icon-setting" type="primary" @click="openAuthDialog(row)">
             角色授权
           </el-button>
           <el-button size="mini" type="danger" icon="el-icon-delete" @click="delteMenu(row, $index)">
@@ -75,7 +75,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <!-- 弹框 -->
+    <!-- 增加编辑弹框 -->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="roleFormVisible" lock-scroll destroy-on-close width="500px" @closed="sureLoading = false">
       <el-form ref="dataForm" :rules="rules" :model="roleParams" label-position="left" label-width="130px" style="width: 400px;margin-left:30px;">
         <el-form-item label="角色名称：" prop="role_name">
@@ -94,13 +94,36 @@
         </el-button>
       </div>
     </el-dialog>
+    <!-- 角色授权弹框 -->
+    <el-dialog title="角色授权" :visible.sync="roleAuthVisible" lock-scroll destroy-on-close width="500px" @closed="closeAuthDialog">
+      <el-tree
+        ref="menuTree"
+        show-checkbox
+        node-key="id"
+        check-strictly
+        highlight-current
+        :data="menuTree"
+        :default-checked-keys="checkedData"
+        :props="defaultProps"
+        @check="getMyNode"
+      />
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="roleAuthVisible = false">
+          取消
+        </el-button>
+        <el-button :loading="authLoading" :disabled="authLoading" type="primary" @click="sureAuth()">
+          确认
+        </el-button>
+      </div>
+    </el-dialog>
     <!-- 分页 -->
     <pagination v-show="total > 0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.size" @pagination="getList" />
   </div>
 </template>
 
 <script>
-import { getRoles, addRole, updateRole, deleteRole, updateEnable } from '@/api/role'
+import { getRoles, addRole, updateRole, deleteRole, updateEnable, rolesAuth } from '@/api/role'
+import { getMenuTree } from '@/api/menu'
 import waves from '@/directive/waves' // waves directive
 import { Message } from 'element-ui'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -145,7 +168,7 @@ export default {
         editor: '编辑角色',
         add: '新增角色'
       },
-      roleFormVisible: false, // 新增编辑菜单弹框
+      roleFormVisible: false, // 新增角色菜单弹框
       dialogStatus: 'add', // 弹框类型
       rules: { // 规则
         role_name: [{ required: true, message: '角色名称不能为空', trigger: 'change' }]
@@ -153,12 +176,22 @@ export default {
       cacheMap: {
         roleParams: null
       },
-      sureLoading: false // 添加、编辑菜单时确认按钮
+      roleAuthVisible: false, // 授权弹框控制
+      sureLoading: false, // 添加、编辑角色时确认按钮
+      authLoading: false, // 授权loading
+      menuTree: null, // 菜单树
+      checkedData: [], // 默认勾选
+      defaultProps: {
+        children: 'childrens',
+        label: 'menu_name'
+      },
+      authId: null // 授权id
     }
   },
   created() {
     this.init()
     this.getList()
+    this.getMenuTree()
   },
   methods: {
     // 获取列表
@@ -168,10 +201,10 @@ export default {
         const { data } = await getRoles(this.listQuery)
         this.list = data.list
         this.total = data.count
-        this.listLoading = false
       } catch (err) {
-        this.listLoading = false
+        console.log(err)
       }
+      this.listLoading = false
     },
     // 编辑
     editMenu(row) {
@@ -180,18 +213,16 @@ export default {
     // 删除
     async delteMenu(row) {
       this.listLoading = true
-      const { code } = await deleteRole({ id: row.id })
-      this.listLoading = false
-      if (code === 0) {
-        Message({
-          message: '删除成功',
-          type: 'success',
-          duration: 2 * 1000
-        })
+      try {
+        await deleteRole({ id: row.id })
+        this.listLoading = false
+        this.openMsg('删除成功')
         this.getList()
+      } catch (err) {
+        console.log(err)
       }
     },
-    // 添加菜单
+    // 添加角色
     async addOrEditorRole() {
       if (!this.roleParams.role_name) {
         this.openMsg('请输入菜单名称', 'warning')
@@ -199,17 +230,15 @@ export default {
       }
       this.sureLoading = true
       this.listLoading = true
-      const { code } = this.dialogStatus === 'add' ? await addRole(this.roleParams) : await updateRole(this.roleParams)
-      this.roleFormVisible = false
-      if (code === 0) {
+      try {
+        this.dialogStatus === 'add' ? await addRole(this.roleParams) : await updateRole(this.roleParams)
+        this.roleFormVisible = false
         this.openMsg('添加成功')
         this.getList()
-      } else {
-        this.listLoading = false
+      } catch (err) {
+        console.log(err)
       }
-    },
-    // 添加下级菜单
-    async addSubMenu(row) {
+      this.listLoading = false
     },
     // 启用禁用
     async updateEnable(row) {
@@ -218,13 +247,14 @@ export default {
         id: row.id,
         enable: row.enable === 1 ? 0 : 1
       }
-      const { code, msg } = await updateEnable(options)
-      if (code === 0) {
+      try {
+        const { msg } = await updateEnable(options)
         this.openMsg(msg)
-        this.getList()
-      } else {
-        this.listLoading = false
+        await this.getList()
+      } catch (err) {
+        console.log(err)
       }
+      this.listLoading = false
     },
     // 二次封装消息提示
     openMsg(message, type = 'success') {
@@ -234,7 +264,7 @@ export default {
     openRolesForm(status, row) {
       this.dialogStatus = status
       if (status === 'editor') {
-        this.roleParams = row
+        this.roleParams = Object.assign({}, row)
       } else {
         this.init()
       }
@@ -252,20 +282,97 @@ export default {
         this.cacheMap.roleParams = JSON.parse(JSON.stringify(this.roleParams))
       }
     },
-    // 展开 开始获取二级菜单数据
-    async expandChange(row, expandedRows, expanded) {
-      if (expandedRows.includes(row) && !this.secTableList[row.id]) {
-        this.$set(this.secTableLoading, row.id, true)
-        const query = {
-          page: 1,
-          size: 15,
-          parentId: row.id
+    // 获取可操作的菜单树
+    async getMenuTree() {
+      try {
+        const { data } = await getMenuTree()
+        this.menuTree = data.treeData
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    // 打开授权弹框
+    openAuthDialog(row) {
+      this.authId = row.id
+      this.roleAuthVisible = true
+      this.checkedData = row.menus
+    },
+    // 确认授权
+    async sureAuth() {
+      this.authLoading = true
+      const menus = await this.$refs['menuTree'].getCheckedKeys()
+      const option = {
+        menus,
+        id: this.authId
+      }
+      try {
+        await rolesAuth(option)
+        this.roleAuthVisible = false
+        this.listLoading = true
+        await this.getList()
+        this.listLoading = false
+      } catch (err) {
+        console.log(err)
+        this.roleAuthVisible = false
+      }
+    },
+    // 关闭授权弹框
+    closeAuthDialog() {
+      this.authLoading = false
+      this.$refs['menuTree'].setCheckedKeys([])
+    },
+    // 获取需要的节点信息
+    getMyNode(currentNode, choiceNodes) {
+      const checkedKeys = choiceNodes.checkedKeys
+      if (checkedKeys.includes(currentNode.id)) {
+        if (currentNode.parent_id !== 0) {
+          let tempNode = JSON.parse(JSON.stringify(currentNode))
+          while (tempNode.parent_id !== 0) {
+            tempNode = this.$refs['menuTree'].getNode(tempNode.id).parent.data
+            this.$refs['menuTree'].setChecked(tempNode, true)
+          }
+          if (currentNode.type !== 1) {
+            currentNode.childrens.forEach(menuItem => {
+              this.$refs['menuTree'].setChecked(menuItem.id, true)
+            })
+          }
+        } else {
+          currentNode.childrens.forEach(firstItem => {
+            this.$refs['menuTree'].setChecked(firstItem.id, true)
+            firstItem.childrens.forEach(btnItem => {
+              this.$refs['menuTree'].setChecked(btnItem.id, true)
+            })
+          })
         }
-        const { data, code } = await getRoles(query)
-        if (code === 0) {
-          this.$set(this.secTableList, row.id, data.list)
+      } else {
+        // 取消选择  如果当前节点不是按钮，则需要进行处理
+        if (currentNode.type !== 1) {
+          // 如果是一级菜单，那么这个一级菜单对应的子菜单需要全部取消选中
+          if (currentNode.parent_id === 0) {
+            currentNode.childrens.forEach((item) => {
+              this.$refs['menuTree'].setChecked(item.id, false)
+              item.childrens.forEach(childItem => {
+                this.$refs['menuTree'].setChecked(childItem.id, false)
+              })
+            })
+          } else {
+            // 如果是二级菜单首先要把菜单对应的按钮全部取消
+            currentNode.childrens.forEach((item) => {
+              this.$refs['menuTree'].setChecked(item.id, false)
+            })
+            // 然后要判断同级菜单是否有选中了
+            const parentNodes = this.$refs['menuTree'].getNode(currentNode.id).parent.data
+            let tempFlag = true
+            parentNodes.childrens.forEach(lineMenu => {
+              if (tempFlag && checkedKeys.indexOf(lineMenu.id) >= 0) {
+                tempFlag = false
+              }
+            })
+            if (tempFlag) {
+              this.$refs['menuTree'].setChecked(parentNodes.id, false)
+            }
+          }
         }
-        this.$set(this.secTableLoading, row.id, false)
       }
     }
   }

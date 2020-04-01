@@ -73,10 +73,9 @@ const setMenu = function(allMenus, isFilter, needMenus) {
   return needMenu
 }
 // 处理菜单数组转为数据
-const completeMenus = function(needMenus, isFilter) {
-  // console.log('isFilter', isFilter)
+const completeMenus = function(needMenus = [], isFilter = false) {
   return new Promise((resolve, reject) => {
-    const queryMenusSql = `SELECT * FROM m_menus`;
+    const queryMenusSql = `SELECT id,menu_name,type,icon,parent_id,url FROM m_menus WHERE enable=1 ORDER BY sort`;
     sqlTodo(queryMenusSql)
       .then(result => {
         resolve(setMenu(result, isFilter, needMenus))

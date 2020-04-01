@@ -4,7 +4,7 @@
  * @Authoe: gxlself
  * @Date: 2020-03-30 10:53:02
  * @LastRditors: gxlself
- * @LastEditTime: 2020-03-31 18:26:00
+ * @LastEditTime: 2020-04-01 11:07:01
  */
 
 const express = require('express');
@@ -34,7 +34,7 @@ router.get('/menu/list', menuList)
 /* 启用/禁用菜单 */
 router.post('/menu/updateEnable', menuEnable)
 /* 返回菜单树 */
-router.get('menu/treeData', menuTreeData)
+router.get('/menu/treeData', menuTreeData)
 
 /* 添加角色 */
 router.post('/roles/add', addRoles)

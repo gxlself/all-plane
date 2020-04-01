@@ -1,3 +1,11 @@
+/*
+ * @Description: 菜单
+ * @Version: 1.0
+ * @Authoe: gxlself
+ * @Date: 2020-03-30 10:53:01
+ * @LastRditors: gxlself
+ * @LastEditTime: 2020-04-01 11:06:29
+ */
 import request from '@/utils/request'
 
 export function getMenus(params) {
@@ -37,5 +45,12 @@ export function updateEnable(data) {
     url: `/menu/updateEnable`,
     method: 'post',
     data
+  })
+}
+
+export function getMenuTree() {
+  return request({
+    url: `/menu/treeData`,
+    method: 'get'
   })
 }
