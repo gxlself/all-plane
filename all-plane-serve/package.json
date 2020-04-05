@@ -2,6 +2,8 @@
   "name": "allplane",
   "version": "0.0.0",
   "private": true,
+  "bin": "./bin/www",
+  "pkg": {},
   "scripts": {
     "start": "node ./bin/www"
   },
