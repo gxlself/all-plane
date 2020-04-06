@@ -23,12 +23,10 @@ const addArticle = (req, res, next) => {
     res.send(eMsg('status is invalid'))
     return
   }
-  let _title = Base64.encode(title)
-  let _theme = Base64.encode(theme)
   let _content = Base64.encode(content)
   let create_date = currentTime()
   let last_modify = currentTime()
-  const saveArticleSQL = `INSERT INTO m_article (title, theme, content, status, create_user, create_date, last_modify) VALUES('${_title}', '${_theme}', '${_content}', ${Number(status)}, '${username}', '${create_date}', '${last_modify}')`
+  const saveArticleSQL = `INSERT INTO m_article (title, theme, content, status, create_user, create_date, last_modify) VALUES('${title}', '${theme}', '${_content}', ${Number(status)}, '${username}', '${create_date}', '${last_modify}')`
   logger.trace(`新建文章SQL ====== ${saveArticleSQL}`)
   sqlTodo(saveArticleSQL)
     .then(result => {
@@ -62,11 +60,9 @@ const updateArticle = (req, res, next) => {
     res.send(eMsg('content must be string'))
     return
   }
-  let _title = Base64.encode(title)
-  let _theme = Base64.encode(theme)
   let _content = Base64.encode(content)
   let last_modify = currentTime()
-  const updateSQL = `UPDATE m_article SET title='${_title}',theme='${_theme}',content='${_content}',last_modify=${last_modify} WHERE id=${Number(id)}`
+  const updateSQL = `UPDATE m_article SET title='${title}',theme='${theme}',content='${_content}',last_modify=${last_modify} WHERE id=${Number(id)}`
   sqlTodo(updateSQL)
     .then(result => {
       res.send(sMsg())
@@ -101,9 +97,16 @@ const deleteArticle = (req, res, next) => {
  * @description: 文章列表
  */
 const queryArticleList = (req, res, next) => {
-  let _title = Base64.encode(title)
-  const { page, size, title } = req.body
-  const querySQL = `SELECT title,theme,create_date,username FROM m_article WHERE page=${Number(page)} AND size=${Number(size)} AND title LIKE '%${_title || ''}%'`
+  const { page, size, title, theme } = req.body
+  if (!checkNumber(page)) {
+    res.send(eMsg('page must be Number'))
+    return
+  }
+  if (!checkNumber(size)) {
+    res.send(eMsg('size must be Number'))
+    return
+  }
+  const querySQL = `SELECT title,theme,create_date,username FROM m_article WHERE page=${Number(page)} AND size=${Number(size)} AND title LIKE '%${title || ''}%' AND theme LIKE '%${theme || ''}%'`
   const countSQL = `SELECT COUNT(*) AS count FROM m_article`
   Promise.all([sqlTodo(querySQL), sqlTodo(countSQL)])
     .then(values => {

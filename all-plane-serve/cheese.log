@@ -1,0 +1,18 @@
+[2020-04-06T15:46:25.682] [TRACE] login - 系统登录SQL ====== select username,password,o_username from m_users where username='5c1338f06725fee21bfe6e43ef2a18e0' and password='e10adc3949ba59abbe56e057f20f883e';
+[2020-04-06T15:46:26.474] [TRACE] login - 登录查找token-SQL ====== SELECT * FROM m_token WHERE username='gxlself'
+[2020-04-06T15:46:26.495] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-04-06T15:46:26.495] [TRACE] request - 请求进入referer ===== http://localhost:3335/
+[2020-04-06T15:46:26.495] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-04-06T15:46:26.495] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-04-06T15:46:26.495] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-04-06T15:46:26.928] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-04-06T15:46:26.928] [TRACE] request - 请求进入referer ===== http://localhost:3335/
+[2020-04-06T15:46:26.929] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-04-06T15:46:26.929] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-04-06T15:46:26.929] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-04-06T15:46:26.932] [WARN] request - 请求warn ====== 无此接口(URL：/manage/manage/transaction/list)
+[2020-04-06T15:46:30.785] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-04-06T15:46:30.785] [TRACE] request - 请求进入referer ===== http://localhost:3335/
+[2020-04-06T15:46:30.785] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-04-06T15:46:30.785] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-04-06T15:46:30.785] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM

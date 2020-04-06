@@ -9,14 +9,23 @@ const { sMsg, eMsg } = require('../utils/send')
 const { sqlTodo } = require('../utils/sql')
 const logger = require('../utils/log').useLog('userinfo')
 
+
+/**
+ * @description: 用户信息
+ */
 const userinfo = (req, res, next) => {
   res.send(sMsg())
 }
 
+/**
+ * @description: 所有用户信息
+ */
 const queryPeople = async (req, res, next) => {
   res.send(sMsg())
   const listSQL = `SELECT o_username,role,status FROM m_users`
   const countSQL = `SELECT COUNT(*) AS count FROM m_users`
+  logger.trace(`所有用户信息SQL ====== ${listSQL}`)
+  logger.trace(`所有用户信息SQL ====== ${countSQL}`)
   Promise.all(sqlTodo(listSQL), sqlTodo(countSQL))
     .then(values => {
       const list = values[0].map(item => {
@@ -27,8 +36,7 @@ const queryPeople = async (req, res, next) => {
       res.send(sMsg(list, count))
     })
     .catch(err => {
-      console.log(`queryPeople ====== ${err.message}`)
-      logger.error(`启用/禁用菜单异常 SQL ====== ${querySQL} | ${countSQL}`)
+      logger.error(`所有用户信息异常 SQL ====== ${err.message}`)
       res.send(eMsg())
     })
 }

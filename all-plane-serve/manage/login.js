@@ -44,11 +44,13 @@ const loginout = (req, res, next) => {
   var requestAuthorization = req.headers.authorization.split(',')[0]
     var requestUsername = req.headers.authorization.split(',')[1]
     const delDataSql = `DELETE FROM m_token WHERE token='${requestAuthorization}' && username='${requestUsername}'`
+    logger.trace(`系统登出SQL ====== ${delDataSql}`)
     sqlTodo(delDataSql)
       .then(result => {
         res.send(sMsg(null, 'loginout is success'));
       })
       .catch(err => {
+        logger.trace(`系统登出 ====== ${err.message}`)
         res.send(eMsg());
       })
 }
@@ -78,7 +80,7 @@ function checkTokenInvalid(username, res) {
       }
     })
     .catch(err => {
-      res.send({ code: -1, msg: err.message, status: 200, data: null });
+      res.send(tMsg());
     })
 }
 // 存储token值 isInsert true 是新增token false 为更细token

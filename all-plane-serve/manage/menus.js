@@ -37,6 +37,7 @@ const addMenu = (req, res, next) => {
   }
   let create_date = currentTime()
   const SQL = `INSERT INTO m_menus (menu_name, sort, type, icon, parent_id, url, create_date) VALUES('${menu_name}', ${Number(sort)}, ${Number(type)}, '${icon || ''}', '${parent_id}', '${url}','${create_date}');`
+  logger.trace(`添加菜单SQL ====== ${SQL}`)
   sqlTodo(SQL)
     .then(result => {
       res.send(sMsg(null))
@@ -65,6 +66,7 @@ const alterMenu = (req, res, next) => {
     return
   }
   const SQL = `UPDATE m_menus SET menu_name='${menu_name}',sort=${Number(sort)},icon='${icon}',url='${url}' WHERE id=${Number(id)};`
+  logger.trace(`更新菜单SQL ====== ${SQL}`)
   sqlTodo(SQL)
     .then(result => {
       if (result.affectedRows === 0) {
@@ -89,6 +91,7 @@ const delMenu = (req, res, next) => {
     return
   }
   const SQL = `DELETE FROM m_menus WHERE id=${Number(id)};`
+  logger.trace(`删除菜单SQL ====== ${SQL}`)
   sqlTodo(SQL)
     .then(result => {
       res.send(sMsg(null, '删除成功'))
@@ -113,6 +116,8 @@ const menuList = (req, res, next) => {
   }
   const listSQL = `SELECT * FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 0} AND menu_name LIKE "%${name}%" AND enable LIKE "%${enable}%" ORDER BY sort LIMIT ${(Number(page) - 1) * Number(size)}, ${Number(page) * Number(size)}`
   const countSQL = `SELECT COUNT(*) AS count FROM m_menus WHERE parent_id=${checkNumber(parentId) ? Number(parentId) : 0}`
+  logger.trace(`菜单列表SQL ====== ${listSQL}`)
+  logger.trace(`菜单列表总数SQL ====== ${countSQL}`)
   Promise.all([sqlTodo(listSQL), sqlTodo(countSQL)])
     .then(values => {
       let timer = setTimeout(() => {
@@ -122,7 +127,6 @@ const menuList = (req, res, next) => {
     })
     .catch(err => {
       logger.error(`获取菜单列表异常 ====== ${err.message}`);
-      logger.error(`获取菜单列表listSQL ====== ${listSQL}`);
       res.send(eMsg()); 
     })
 }
@@ -140,17 +144,18 @@ if (!checkNumber(enable)) {
   return
 }
 const updateSQL = `UPDATE m_menus SET enable=${Number(enable)} WHERE id=${id}`
+logger.trace(`启用状态修改SQL ====== ${updateSQL}`)
 sqlTodo(updateSQL)
   .then(result => {
     if (result.affectedRows === 0) {
-      logger.error(`启用/禁用菜单异常 SQL ====== ${updateSQL}`)
+      logger.error(`启用/禁用菜单异常 ====== id对应的菜单不存在`)
       res.send(eMsg())
     } else {
       res.send(sMsg())
     }
   })
   .catch(err => {
-    logger.error(`启用/禁用菜单异常 SQL ====== ${updateSQL}`)
+    logger.error(`启用/禁用菜单异常 SQL ====== ${err.message}`)
     res.send(eMsg())
   })
 }
@@ -159,7 +164,6 @@ sqlTodo(updateSQL)
  * @description: 菜单树
  */
 const menuTreeData = async (req, res, next) => {
-  // completeMenus()
   try {
     const treeData = await completeMenus()
     res.send(sMsg({treeData}))

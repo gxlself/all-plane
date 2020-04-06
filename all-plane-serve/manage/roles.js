@@ -21,6 +21,7 @@ const addRoles = (req, res, next) => {
     return
   }
   const SQL = `INSERT INTO m_roles (role_name, remark, create_date, last_modify) VALUES('${role_name}', '${remark}', '${currentTime()}', '${currentTime()}');`
+  logger.trace(`添加角色SQL ====== ${SQL}`)
   sqlTodo(SQL)
     .then(result => {
       res.send(sMsg())
@@ -45,6 +46,7 @@ const alterRoles = (req, res, next) => {
     return
   }
   const SQL = `UPDATE m_roles SET role_name='${name}',remark='${remark}',last_modify='${currentTime()}' WHERE id=${Number(id)}`
+  logger.trace(`修改角色SQL ====== ${SQL}`)
   sqlTodo(SQL)
     .then(result => {
       if (result.affectedRows === 0) {
@@ -70,6 +72,7 @@ const delRoles = (req, res, next) => {
     return
   }
   const SQL = `DELETE FROM m_roles WHERE id=${Number(id)}`
+  logger.trace(`删除角色SQL ====== ${SQL}`)
   sqlTodo(SQL)
     .then(result => {
       res.send(sMsg())
@@ -95,6 +98,8 @@ const rolesList = (req, res, next) => {
   }
   const listSQL = `SELECT * FROM m_roles WHERE role_name LIKE "%${role_name}%" AND enable LIKE "%${enable}%" LIMIT ${(Number(page) - 1) * Number(size)}, ${Number(page) * Number(size)};`
   const countSQL = `SELECT COUNT(*) AS count FROM m_roles;`
+  logger.trace(`角色列表SQL ====== ${listSQL}`)
+  logger.trace(`角色列表总数SQL ====== ${countSQL}`)
   Promise.all([sqlTodo(listSQL), sqlTodo(countSQL)])
     .then(values => {
       const list = values[0].map(item => {
@@ -115,7 +120,6 @@ const rolesList = (req, res, next) => {
     })
     .catch(err => {
       logger.error(`获取角色列表异常 ====== ${err.message}`);
-      logger.error(`获取角色列表listSQL ====== ${listSQL}`);
       res.send(eMsg()); 
     })
 }
@@ -130,11 +134,11 @@ const rolesAuth = (req, res, next) => {
     return
   }
   const SQL = `UPDATE m_roles SET menus='[${menus}]' WHERE id=${Number(id)}`
+  logger.trace(`角色授权SQL ====== ${SQL}`)
   sqlTodo(SQL)
     .then(result => {
       if (result.affectedRows === 0) {
         logger.error(`角色授权未修改异常 ====== 未操作成功`)
-        logger.error(`角色授权未修改SQL ====== ${SQL}`)
         res.send(eMsg('id is invalid'))
       } else {
         res.send(sMsg())
@@ -160,6 +164,7 @@ const rolesEnable = (req, res, next) => {
     return
   }
   const updateSQL = `UPDATE m_roles SET enable=${Number(enable)} WHERE id=${id}`
+  logger.trace(`启用状态修改SQL ====== ${updateSQL}`)
   sqlTodo(updateSQL)
     .then(result => {
       if (result.affectedRows === 0) {
@@ -170,7 +175,7 @@ const rolesEnable = (req, res, next) => {
       }
     })
     .catch(err => {
-      logger.error(`启用/禁用角色异常SQL ====== ${updateSQL}`)
+      logger.error(`启用/禁用角色异常SQL ====== ${err.message}`)
       res.send(eMsg())
     })
 }
