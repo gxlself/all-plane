@@ -14,7 +14,7 @@ const { addRoles, alterRoles, delRoles, rolesList, rolesAuth, rolesEnable } = re
 const { loginout } = require('./login')
 const { userinfo } = require('./user')
 const { permission } = require('./permission')
-const { addArticle } = require('./article')
+const { addArticle, updateArticle, deleteArticle, queryArticleList, articleDetail, changeStatus, addComment, deleteComment, changeCommentStatus } = require('./article')
 
 /* 登出 */
 router.get('/loginout', loginout);
