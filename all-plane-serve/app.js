@@ -93,7 +93,7 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   // send error
-  res.send(nMsg(err, -1, err.status || 500))
+  res.send(nMsg(err.message, -1, err.status || 500))
 });
 
 module.exports = app;

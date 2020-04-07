@@ -1,18 +1,34 @@
-[2020-04-06T15:46:25.682] [TRACE] login - 系统登录SQL ====== select username,password,o_username from m_users where username='5c1338f06725fee21bfe6e43ef2a18e0' and password='e10adc3949ba59abbe56e057f20f883e';
-[2020-04-06T15:46:26.474] [TRACE] login - 登录查找token-SQL ====== SELECT * FROM m_token WHERE username='gxlself'
-[2020-04-06T15:46:26.495] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-04-06T15:46:26.495] [TRACE] request - 请求进入referer ===== http://localhost:3335/
-[2020-04-06T15:46:26.495] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-04-06T15:46:26.495] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-04-06T15:46:26.495] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
-[2020-04-06T15:46:26.928] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-04-06T15:46:26.928] [TRACE] request - 请求进入referer ===== http://localhost:3335/
-[2020-04-06T15:46:26.929] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-04-06T15:46:26.929] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-04-06T15:46:26.929] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
-[2020-04-06T15:46:26.932] [WARN] request - 请求warn ====== 无此接口(URL：/manage/manage/transaction/list)
-[2020-04-06T15:46:30.785] [TRACE] request - 请求进入host ===== localhost:3333
-[2020-04-06T15:46:30.785] [TRACE] request - 请求进入referer ===== http://localhost:3335/
-[2020-04-06T15:46:30.785] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
-[2020-04-06T15:46:30.785] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
-[2020-04-06T15:46:30.785] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-04-07T22:39:16.911] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-04-07T22:39:16.911] [TRACE] request - 请求进入referer ===== http://localhost:3335/
+[2020-04-07T22:39:16.911] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-04-07T22:39:16.911] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-04-07T22:39:16.911] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-04-07T22:39:17.173] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-04-07T22:39:17.173] [TRACE] request - 请求进入referer ===== http://localhost:3335/
+[2020-04-07T22:39:17.173] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-04-07T22:39:17.173] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-04-07T22:39:17.173] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-04-07T22:39:17.177] [ERROR] request - 请求error ====== Assignment to constant variable.
+[2020-04-07T22:42:11.871] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-04-07T22:42:11.872] [TRACE] request - 请求进入referer ===== http://localhost:3335/
+[2020-04-07T22:42:11.872] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-04-07T22:42:11.872] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-04-07T22:42:11.872] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-04-07T22:42:12.201] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-04-07T22:42:12.201] [TRACE] request - 请求进入referer ===== http://localhost:3335/
+[2020-04-07T22:42:12.202] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-04-07T22:42:12.202] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-04-07T22:42:12.202] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-04-07T22:42:12.208] [ERROR] request - 请求error ====== Assignment to constant variable.
+[2020-04-07T22:44:58.899] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-04-07T22:44:58.900] [TRACE] request - 请求进入referer ===== http://localhost:3335/
+[2020-04-07T22:44:58.900] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-04-07T22:44:58.900] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-04-07T22:44:58.900] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-04-07T22:44:59.230] [TRACE] request - 请求进入host ===== localhost:3333
+[2020-04-07T22:44:59.230] [TRACE] request - 请求进入referer ===== http://localhost:3335/
+[2020-04-07T22:44:59.230] [TRACE] request - 请求进入user-agent ===== Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36
+[2020-04-07T22:44:59.230] [INFO] token - 登录SQL执行 ====== SELECT a_token,username FROM m_token WHERE token='tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM'
+[2020-04-07T22:44:59.230] [INFO] token - 校验token ====== tySKWst6nhh878e0t13N1RMJJxv3atkzpATx_YHWDLM
+[2020-04-07T22:44:59.237] [TRACE] article - 查询文章 listSQL ====== SELECT id,title,theme,create_user,status,create_date,last_modify FROM m_article WHERE title LIKE '%%' AND theme LIKE '%%' AND create_user LIKE '%0%' AND status LIKE '%%' LIMIT 0, 10
+[2020-04-07T22:44:59.237] [TRACE] article - 查询文章 countSQL ====== SELECT COUNT(*) AS count FROM m_article

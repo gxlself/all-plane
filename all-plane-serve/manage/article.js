@@ -1,5 +1,7 @@
 const Base64 = require('js-base64').Base64
+const { sqlTodo } = require('../utils/sql');
 const { sMsg, eMsg } = require('../utils/send')
+const { currentTime, checkString, checkNumber } = require('../utils/util')
 const logger = require('../utils/log').useLog('article')
 
 /**
@@ -63,11 +65,11 @@ const updateArticle = (req, res, next) => {
   let _content = Base64.encode(content)
   let last_modify = currentTime()
   const updateSQL = `UPDATE m_article SET title='${title}',theme='${theme}',content='${_content}',last_modify=${last_modify} WHERE id=${Number(id)}`
+  logger.traace(`编辑文章 SQL ====== ${updateSQL}`)
   sqlTodo(updateSQL)
     .then(result => {
       res.send(sMsg())
     }).catch(err => {
-      logger.error(`编辑文章异常SQL ====== ${updateSQL}`)
       logger.error(`编辑文章异常 ====== ${err.message}`)
       res.send(eMsg())
     })
@@ -83,11 +85,11 @@ const deleteArticle = (req, res, next) => {
     return
   }
   const delteSQL = `DELETE FROM m_article WHERE id=${Number(id)}`
+  logger.trace(`删除文章 SQL ====== ${delteSQL}`)
   sqlTodo(delteSQL)
     .then(result => {
       res.send(sMsg())
     }).catch(err => {
-      logger.error(`删除文章异常SQL ====== ${delteSQL}`)
       logger.error(`删除文章异常 ====== ${err.message}`)
       res.send(eMsg())
     })
@@ -97,7 +99,7 @@ const deleteArticle = (req, res, next) => {
  * @description: 文章列表
  */
 const queryArticleList = (req, res, next) => {
-  const { page, size, title, theme } = req.body
+  const { page, size, title, theme, status, create_user } = req.body
   if (!checkNumber(page)) {
     res.send(eMsg('page must be Number'))
     return
@@ -106,17 +108,23 @@ const queryArticleList = (req, res, next) => {
     res.send(eMsg('size must be Number'))
     return
   }
-  const querySQL = `SELECT title,theme,create_date,username FROM m_article WHERE page=${Number(page)} AND size=${Number(size)} AND title LIKE '%${title || ''}%' AND theme LIKE '%${theme || ''}%'`
+  let _status = ''
+  if (status === '' || status === '-1') {
+    _status = ''
+  } else {
+    _status = Number(status)
+  }
+  const querySQL = `SELECT id,title,theme,create_user,status,create_date,last_modify FROM m_article WHERE title LIKE '%${title || ''}%' AND theme LIKE '%${theme || ''}%' AND create_user LIKE '%${create_user | ''}%' AND status LIKE '%${_status}%' SORT create_date LIMIT ${(Number(page) - 1) * Number(size)}, ${Number(page) * Number(size)}`
   const countSQL = `SELECT COUNT(*) AS count FROM m_article`
+  logger.trace(`查询文章 listSQL ====== ${querySQL}`)
+  logger.trace(`查询文章 countSQL ====== ${countSQL}`)
   Promise.all([sqlTodo(querySQL), sqlTodo(countSQL)])
     .then(values => {
       const list = values[0]
       const count = values[1][0].count
-      res.send({list, count})
+      res.send(sMsg({list, count}))
     })
     .catch(err => {
-      logger.error(`查询文章异常listSQL ====== ${querySQL}`)
-      logger.error(`查询文章异常countSQL ====== ${countSQL}`)
       logger.error(`查询文章异常 ====== ${err.message}`)
       res.send(eMsg())
     })
@@ -132,12 +140,12 @@ const articleDetail = (req, res, next) => {
     return
   }
   const detailSQL = `SELECT * FROM m_article WHERE id=${Number(id)}`
+  logger.error(`文章详情 SQL ====== ${detailSQL}`)
   sqlTodo(detailSQL)
     .then(result => {
       res.send(sMsg({detail: result[0]}))
     })
     .catch(err => {
-      logger.error(`文章详情异常SQL ====== ${detailSQL}`)
       logger.error(`文章详情异常 ====== ${err.message}`)
       res.send(eMsg())
     })
@@ -157,12 +165,12 @@ const changeStatus = (req, res, next) => {
     return
   }
   const changeSQL = `UPDATE m_article SET status=${Number(status)} WHERE id=${Number(id)}`
+  logger.trace(`修改文章状态 SQL ====== ${changeSQL}`)
   sqlTodo(changeSQL)
     .then(result => {
       res.send(sMsg())
     })
     .catch(err => {
-      logger.error(`修改文章状态异常SQL ====== ${changeSQL}`)
       logger.error(`修改文章状态异常 ====== ${err.message}`)
       res.send(eMsg())
     })
@@ -189,7 +197,6 @@ const addComment = (req, res, next) => {
       res.send(sMsg())
     })
     .catch(err => {
-      logger.error(`添加评论异常SQL ====== ${addCommentSQL}`)
       logger.error(`添加评论异常 ====== ${err.message}`)
       res.send(eMsg('保存失败'))
     })
@@ -205,11 +212,11 @@ const deleteComment = (req, res, next) => {
     return
   }
   const delteSQL = `DELETE FROM m_article_comment WHERE id=${Number(id)}`
+  logger.trace(`删除评论 SQL ====== ${delteSQL}`)
   sqlTodo(delteSQL)
     .then(result => {
       res.send(sMsg())
     }).catch(err => {
-      logger.error(`删除评论异常SQL ====== ${delteSQL}`)
       logger.error(`删除评论异常 ====== ${err.message}`)
       res.send(eMsg())
     })
@@ -229,12 +236,12 @@ const changeCommentStatus = (req, res, next) => {
     return
   }
   const changeSQL = `UPDATE m_article_comment SET status=${Number(status)} WHERE id=${Number(id)}`
+  logger.trace(`修改评论状态 SQL ====== ${changeSQL}`)
   sqlTodo(changeSQL)
     .then(result => {
       res.send(sMsg())
     })
     .catch(err => {
-      logger.error(`修改评论状态异常SQL ====== ${changeSQL}`)
       logger.error(`修改评论状态异常 ====== ${err.message}`)
       res.send(eMsg())
     })

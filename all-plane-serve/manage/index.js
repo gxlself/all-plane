@@ -53,13 +53,13 @@ router.post('/roles/updateEnable', rolesEnable)
 
 /* -----------文章管理----------- */
 /* 新建文章 */
-router.post('/article/add', addArticle);
+router.post('/article/create', addArticle);
 /* 编辑文章 */
-router.post('/article/alter', updateArticle);
+router.post('/article/update', updateArticle);
 /* 删除文章 */
 router.get('/article/delete', deleteArticle);
 /* 查询文章 */
-router.post('/article/query', queryArticleList);
+router.post('/article/list', queryArticleList);
 /* 文章详情 */
 router.get('/article/detail', articleDetail);
 /* 文章状态 */

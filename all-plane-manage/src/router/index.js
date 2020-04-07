@@ -6,6 +6,8 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
+/*  */
+
 /* Router Modules */
 // import componentsRouter from './modules/components'
 // import chartsRouter from './modules/charts'
@@ -105,44 +107,60 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/menu',
+    path: '/basicinfo',
     component: Layout,
-    redirect: '/menu/list',
-    name: 'Menu',
+    redirect: '/menu',
+    name: 'Basicinfo',
+    meta: { title: '基础信息维护', icon: 'component' },
     children: [
       {
-        path: 'list',
-        component: () => import('@/views/menu/list'),
-        name: 'MenuList',
+        path: 'menu',
+        component: () => import('@/views/basicinfo/menu'),
+        name: 'MenuManage',
         meta: { title: '菜单管理', icon: 'component' }
+      },
+      {
+        path: 'roles',
+        component: () => import('@/views/basicinfo/roles'),
+        name: 'RolesManage',
+        meta: { title: '角色管理', icon: 'component' }
+      },
+      {
+        path: 'people',
+        component: () => import('@/views/basicinfo/people'),
+        name: 'PeopleManage',
+        meta: { title: '人员管理', icon: 'component' }
       }
     ]
   },
   {
-    path: '/role',
+    path: '/article',
     component: Layout,
-    redirect: '/role/list',
-    name: 'Role',
+    name: 'Article',
+    meta: { title: '文章管理', icon: 'component' },
     children: [
       {
         path: 'list',
-        component: () => import('@/views/roles/list'),
-        name: 'RoleList',
-        meta: { title: '角色管理', icon: 'component', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/manage',
-    component: Layout,
-    redirect: '/peopleManage',
-    name: 'PeopleManage',
-    children: [
+        component: () => import('@/views/article/list'),
+        name: 'ArticleList',
+        meta: { title: '文章列表', icon: 'component' }
+      },
       {
-        path: '/peopleManage',
-        component: () => import('@/views/people/list'),
-        name: 'peopleManage',
-        meta: { title: '人员管理', icon: 'component', noCache: true }
+        path: 'edit',
+        component: () => import('@/views/article/edit'),
+        name: 'ArticleEdit',
+        meta: { title: '编辑文章', icon: 'component' }
+      },
+      {
+        path: 'audit',
+        component: () => import('@/views/article/audit'),
+        name: 'ArticleAudit',
+        meta: { title: '文章审核', icon: 'component' }
+      },
+      {
+        path: 'comment',
+        component: () => import('@/views/article/comment'),
+        name: 'ArticleComment'
       }
     ]
   },
