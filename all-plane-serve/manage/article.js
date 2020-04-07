@@ -114,7 +114,7 @@ const queryArticleList = (req, res, next) => {
   } else {
     _status = Number(status)
   }
-  const querySQL = `SELECT id,title,theme,create_user,status,create_date,last_modify FROM m_article WHERE title LIKE '%${title || ''}%' AND theme LIKE '%${theme || ''}%' AND create_user LIKE '%${create_user | ''}%' AND status LIKE '%${_status}%' SORT create_date LIMIT ${(Number(page) - 1) * Number(size)}, ${Number(page) * Number(size)}`
+  const querySQL = `SELECT id,title,theme,create_user,status,create_date,last_modify FROM m_article WHERE title LIKE '%${title || ''}%' AND theme LIKE '%${theme || ''}%' AND create_user LIKE '%${create_user}%' AND status LIKE '%${_status}%' ORDER BY create_date DESC LIMIT ${(Number(page) - 1) * Number(size)}, ${Number(page) * Number(size)}`
   const countSQL = `SELECT COUNT(*) AS count FROM m_article`
   logger.trace(`查询文章 listSQL ====== ${querySQL}`)
   logger.trace(`查询文章 countSQL ====== ${countSQL}`)

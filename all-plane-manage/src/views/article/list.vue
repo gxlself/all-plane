@@ -4,7 +4,7 @@
     <div class="filter-container">
       <el-input v-model="listQuery.title" placeholder="文章名称" style="width: 200px" class="filter-item" @keyup.enter.native="getList()" />
       <el-input v-model="listQuery.theme" placeholder="文章主题" style="width: 200px" class="filter-item" @keyup.enter.native="getList()" />
-      <el-input v-model="listQuery.create_use" placeholder="文章作者" style="width: 200px" class="filter-item" @keyup.enter.native="getList()" />
+      <el-input v-model="listQuery.create_user" placeholder="文章作者" style="width: 200px" class="filter-item" @keyup.enter.native="getList()" />
       <el-select v-model="listQuery.status" placeholder="文章状态" style="width: 140px" class="filter-item" @change="getList()">
         <el-option label="全部" :value="-1" />
         <el-option label="草稿" :value="0" />
