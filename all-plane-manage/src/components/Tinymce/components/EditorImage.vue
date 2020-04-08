@@ -1,9 +1,9 @@
 <template>
   <div class="upload-container">
-    <el-button :style="{background:color,borderColor:color}" icon="el-icon-upload" size="mini" type="primary" @click=" dialogVisible=true">
-      upload
+    <el-button :style="{background:color,borderColor:color}" icon="el-icon-upload" size="mini" type="primary" @click="dialogVisible=true">
+      上传本地图片
     </el-button>
-    <el-dialog :visible.sync="dialogVisible">
+    <el-dialog title="上传本地图片" :visible.sync="dialogVisible">
       <el-upload
         :multiple="true"
         :file-list="fileList"
@@ -15,16 +15,17 @@
         action="https://httpbin.org/post"
         list-type="picture-card"
       >
-        <el-button size="small" type="primary">
-          Click upload
-        </el-button>
+        点击该区域进行选取上传本地图片
       </el-upload>
-      <el-button @click="dialogVisible = false">
-        Cancel
-      </el-button>
-      <el-button type="primary" @click="handleSubmit">
-        Confirm
-      </el-button>
+
+      <div class="sure-btn-box">
+        <el-button @click="dialogVisible = false">
+          取消
+        </el-button>
+        <el-button type="primary" @click="handleSubmit">
+          确定
+        </el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -105,5 +106,8 @@ export default {
   /deep/ .el-upload--picture-card {
     width: 100%;
   }
+}
+.sure-btn-box{
+  text-align: right;
 }
 </style>

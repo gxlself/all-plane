@@ -1,10 +1,13 @@
 <template>
-  <div>q</div>
+  <article-detail :is-edit="false" />
 </template>
 
 <script>
-export default {
+import ArticleDetail from './components/ArticleDetail'
 
+export default {
+  name: 'CreateArticle',
+  components: { ArticleDetail }
 }
 </script>
 

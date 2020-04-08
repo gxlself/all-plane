@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 头部搜索 -->
-    <div class="filter-container">
+    <div class="filter-container filter-nowrap">
       <el-input v-model="listQuery.title" placeholder="文章名称" style="width: 200px" class="filter-item" @keyup.enter.native="getList()" />
       <el-input v-model="listQuery.theme" placeholder="文章主题" style="width: 200px" class="filter-item" @keyup.enter.native="getList()" />
       <el-input v-model="listQuery.create_user" placeholder="文章作者" style="width: 200px" class="filter-item" @keyup.enter.native="getList()" />
@@ -14,7 +14,7 @@
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="getList()">搜索</el-button>
       <el-button v-waves class="filter-item" type="danger" icon="el-icon-search" @click="getList()">重置</el-button>
-      <el-button v-waves class="filter-item" style="margin-left: 10px" type="primary" icon="el-icon-plus" @click="openRolesForm('add')">新增</el-button>
+      <el-button v-waves class="filter-item" style="margin-left: 10px" type="primary" icon="el-icon-plus" @click="addArticle('add')">新增</el-button>
     </div>
     <div class="filter-container">
       <el-date-picker v-model="listQuery.start_date" class="filter-item" type="datetime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" default-time="00:00:00" placeholder="选择日期时间" />
@@ -153,6 +153,12 @@ export default {
       } else {
         this.cacheMap.listQuery = JSON.parse(JSON.stringify(this.listQuery))
       }
+    },
+    addArticle(type) {
+      this.$router.push({
+        name: 'ArticleEdit',
+        query: { type }
+      })
     }
   }
 }
@@ -162,5 +168,8 @@ export default {
 .filter-span {
   color: rgb(183, 185, 190);
   padding: 0 20px;
+}
+.filter-nowrap{
+  white-space: nowrap;
 }
 </style>

@@ -146,10 +146,11 @@ export const asyncRoutes = [
         meta: { title: '文章列表', icon: 'component' }
       },
       {
+        hidden: true,
         path: 'edit',
         component: () => import('@/views/article/edit'),
         name: 'ArticleEdit',
-        meta: { title: '编辑文章', icon: 'component' }
+        meta: { title: '编辑文章', icon: 'component', show: false, noCache: true }
       },
       {
         path: 'audit',
