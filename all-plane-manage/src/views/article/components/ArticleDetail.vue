@@ -110,10 +110,10 @@ export default {
     const validateRequire = (rule, value, callback) => {
       if (value === '') {
         this.$message({
-          message: rule.field + '为必传项',
+          message: rule.name + '为必传项',
           type: 'error'
         })
-        callback(new Error(rule.field + '为必传项'))
+        callback(new Error(rule.name + '为必传项'))
       } else {
         callback()
       }
@@ -138,10 +138,10 @@ export default {
       loading: false,
       userListOptions: [],
       rules: {
-        image_uri: [{ validator: validateRequire }],
-        title: [{ validator: validateRequire }],
-        content: [{ validator: validateRequire }],
-        source_uri: [{ validator: validateSourceUri, trigger: 'blur' }]
+        image_uri: [{ validator: validateRequire, name: '图片' }],
+        title: [{ validator: validateRequire, name: '标题' }],
+        content: [{ validator: validateRequire, name: '内容' }],
+        source_uri: [{ validator: validateSourceUri, trigger: 'blur', name: '视频地址' }]
       },
       tempRoute: {}
     }
