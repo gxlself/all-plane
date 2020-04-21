@@ -54,21 +54,22 @@ const setMenu = function(allMenus, isFilter, needMenus) {
     for (let i = 0; i < copyMenus.length; i++) {
       if (isFilter) {
         if (copyMenus[i].parent_id === id && needMenus.includes(copyMenus[i].id)) {
-          copyMenus[i].childrens = getChilds(copyMenus[i].id, copyMenus)
-          newMenu.push(copyMenus[i])
-          copyMenus.splice(i, 1)
+          filterMenu(copyMenus, i)
           i--
         }
       } else {
-        if (copyMenus[i].parent_id === id) {
-          copyMenus[i].childrens = getChilds(copyMenus[i].id, copyMenus)
-          newMenu.push(copyMenus[i])
-          copyMenus.splice(i, 1)
+        if (copyMenus[i].parent_id === id) {filterMenu(copyMenus, i)
+          filterMenu(copyMenus, i)
           i--
         }
       }
     }
     return newMenu
+  }
+  function filterMenu(copyMenus, idx) {
+    copyMenus[idx].childrens = getChilds(copyMenus[idx].id, copyMenus)
+    newMenu.push(copyMenus[idx])
+    copyMenus.splice(idx, 1)
   }
   return needMenu
 }
